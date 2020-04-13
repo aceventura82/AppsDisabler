@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/menuTagRename"
+    android:title="@string/rename" />
+<item
+    android:id="@+id/menuTagDelete"
+    android:title="@string/delete" />
+<item
+    android:id="@+id/menuTagDisable"
+    android:title="@string/disable_app" />
+</menu>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/menuRemoveApp"
+    android:title="@string/remove_app" />
+<item
+    android:id="@+id/menuAddApp"
+    android:title="@string/add_auto_disable" />
+<item
+    android:id="@+id/menuEnableApp"
+    android:title="@string/enable_app" />
+<item
+    android:id="@+id/menuDisableApp"
+    android:title="@string/disable_app" />
+<item
+    android:id="@+id/menuTag"
+    android:title="@string/tag" >
+    <menu>
+        <item android:id="@+id/tab0" android:title="@string/tag" />
+        <item android:id="@+id/tab1" android:title="@string/tag" />
+        <item android:id="@+id/tab2" android:title="@string/tag" />
+        <item android:id="@+id/tab3" android:title="@string/tag" />
+        <item android:id="@+id/tab4" android:title="@string/tag" />
+        <item android:id="@+id/tab5" android:title="@string/tag" />
+        <item android:id="@+id/tab6" android:title="@string/tag" />
+        <item android:id="@+id/tab7" android:title="@string/tag" />
+        <item android:id="@+id/tab8" android:title="@string/tag" />
+        <item android:id="@+id/tab9" android:title="@string/tag" />
+    </menu>
+</item>
+</menu>

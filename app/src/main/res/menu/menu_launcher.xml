@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/menuConfig"
+    android:title="@string/config" />
+<item
+    android:id="@+id/menuApps"
+    android:title="@string/edit_apps" />
+<item
+    android:id="@+id/menuDisableAll"
+    android:title="@string/disableAll" />
+<item
+    android:id="@+id/menuEnableAll"
+    android:title="@string/enableAllApp" />
+</menu>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/menuLayout"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewMenuRemoveApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:background="#fff"
+        android:padding="5sp"
+        android:text="@string/remove_app" />
+
+    <TextView
+        android:id="@+id/textViewMenuDisableApp"
+        android:layout_width="match_parent"
+        android:textSize="24sp"
+        android:padding="5sp"
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:text="@string/disable_app" />
+
+    <TextView
+        android:id="@+id/textViewMenuEnableApp"
+        android:layout_width="match_parent"
+        android:textSize="24sp"
+        android:padding="5sp"
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_app" />
+</LinearLayout>
