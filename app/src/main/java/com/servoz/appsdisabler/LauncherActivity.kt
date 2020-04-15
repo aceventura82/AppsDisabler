@@ -1,7 +1,5 @@
 package com.servoz.appsdisabler
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -11,23 +9,29 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.*
 import android.view.View.GONE
+import android.view.animation.TranslateAnimation
 import android.widget.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.view.isVisible
 import com.servoz.appsdisabler.tools.Db
 import com.servoz.appsdisabler.tools.RunCommand
 import kotlinx.android.synthetic.main.launcher_layout.*
 import kotlinx.android.synthetic.main.tag_name.view.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import java.util.*
-import kotlin.system.exitProcess
+
+
+val Int.dp: Int
+   get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 
 class LauncherActivity : AppCompatActivity() {
+
 
     private var prefFile: String = "com.servoz.appsdisabler.prefs"
     private var prefs: SharedPreferences? = null
@@ -35,6 +39,8 @@ class LauncherActivity : AppCompatActivity() {
     private var tabsIds= arrayListOf<TextView>()
     private var textColor=0
     private var textColor2=0
+    private var iconsColors=0
+    private var itemColor=0
     private var baseColor=0
     private var alpha=50
 
@@ -43,19 +49,30 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.launcher_layout)
         prefs = getSharedPreferences(prefFile, 0)
         val objCmd= RunCommand()
+        if(prefs!!.getString("LABELS","-1")=="-1")
+            prefs!!.edit().putString("LABELS", "ON").apply()
 
         setTheme()
-        listTabs(objCmd)
-        setInitialTab()
-        getApps(objCmd,prefs!!.getInt("my_apps_columns",6),currentTag)
-        EmptyViewMain.setOnClickListener { exitProcess(0) }
+        EmptyViewMain.setOnClickListener { finish() }
         buttonLauncherMenu.setOnClickListener{showConfigMenu(buttonLauncherMenu, objCmd)}
-        newTab(objCmd)
         setColors()
+
+    }
+
+    override fun onResume() {
+        val objCmd= RunCommand()
+        if(prefs!!.getString("SHOW_TABS","")=="ON"){
+            listTabs(objCmd,currentTag)
+            newTab(objCmd)
+            setInitialTab()
+        }else
+            linearLayoutTags.isVisible=false
+        getApps(objCmd,prefs!!.getInt("my_apps_columns",6),currentTag)
+        super.onResume()
     }
 
     private fun setTheme(){
-        when(prefs!!.getString("THEME","System")){
+        when(prefs!!.getString("THEME","")){
             "Dark" -> {
                 setDefaultNightMode(MODE_NIGHT_YES)
             }
@@ -65,21 +82,87 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
-    private fun setInitialTab(){
-        currentTag=prefs!!.getString("CURRENT_TAG","")!!
-        if(currentTag!="") {
-            if (Integer.parseInt(currentTag.replace("TAG_", "")) >= tabsIds.count())
-                currentTag = ""
-        }
-        if(currentTag!=""){
-            for (i in 0 until 10){
-                if(prefs!!.getString(currentTag,"")==tabsIds[i].text){
-                    setTitlesColors(tabsIds[i])
-                    break
-                }
+    private fun setColors(){
+        baseColor = if(prefs!!.getString("BG","")=="")
+            Color.BLACK
+        else
+            Color.parseColor(prefs!!.getString("BG",""))
+        textColor = if(prefs!!.getString("TEXT","")=="")
+            getColor(R.color.design_default_color_on_primary)
+        else
+            Color.parseColor(prefs!!.getString("TEXT",""))
+        textColor2 = if(prefs!!.getString("TEXT2","")=="")
+            getColor(R.color.colorAppDisabled)
+        else
+            Color.parseColor(prefs!!.getString("TEXT2",""))
+        iconsColors = if(prefs!!.getString("ICONS_THEME","")=="")
+            getColor(R.color.colorIcons)
+        else
+            Color.parseColor(prefs!!.getString("ICONS_THEME",""))
+        itemColor = if(prefs!!.getString("ITEM_SEL","")=="")
+            getColor(R.color.colorAppSelected)
+        else
+            Color.parseColor(prefs!!.getString("ITEM_SEL",""))
+
+        alpha = (prefs!!.getInt("ALPHA",50) / 100f * 255).toInt()
+        linearLayoutMain.setBackgroundColor(baseColor)
+        buttonLayout.setBackgroundColor(baseColor)
+        linearLayoutMain.background.alpha=alpha
+        buttonLayout.background.alpha=alpha
+
+        buttonLauncherMenu.backgroundTintList = ColorStateList.valueOf(getColor(R.color.colorAppSelected))
+        textViewAllApps.setColorFilter(iconsColors)
+        textViewAddTab.setColorFilter(iconsColors)
+        buttonLauncherMenu.setColorFilter(iconsColors)
+        buttonLauncherConfig.setColorFilter(iconsColors)
+        buttonLauncherEditApps.setColorFilter(iconsColors)
+        buttonLauncherDisableAll.setColorFilter(iconsColors)
+        buttonLauncherEnableAll.setColorFilter(iconsColors)
+    }
+
+    private fun listTabs(objCmd: RunCommand, cTag:String=""){
+        var columns=0
+        gridTitlesMyApps.removeAllViews()
+        for (i in 0 until 10){
+            if(prefs!!.getString("TAG_$i","")!=""){
+                columns++
             }
-        }else
-            setTitlesColors(textViewAllApps)
+        }
+        if(cTag==""){
+            textViewAllApps.setBackgroundColor(itemColor)
+        }
+        tabsIds= arrayListOf()
+        for (i in 0 until 10){
+            val tabI=prefs!!.getString("TAG_$i","")
+            val tab=TextView(this)
+            if(tabI!=""){
+                val tagId="TAG_$i"
+                tab.id=i
+                tab.textSize=24F
+                tab.text=tabI
+                tab.setTypeface(null, Typeface.BOLD)
+                tab.setPadding(0,10,0,10)
+                tab.gravity=Gravity.CENTER_HORIZONTAL
+                if(cTag!="" && cTag==tagId){
+                    tab.setBackgroundColor(itemColor)
+                }
+                tab.layoutParams=GridLayout.LayoutParams(LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)).apply {
+                    columnSpec=GridLayout.spec(i, 1f)
+                    setMargins(0,0,0,0)
+                }
+                tab.setOnClickListener {
+                    changeTab(tagId,objCmd,tab)
+                }
+                tab.setOnLongClickListener {
+                    showTagTitleMenu(tab,objCmd,tagId)
+                    true
+                }
+                gridTitlesMyApps.addView(tab)
+            }else{
+                tab.text=""
+            }
+            tabsIds.add(tab)
+        }
     }
 
     private fun newTab(objCmd: RunCommand){
@@ -101,21 +184,18 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
-    private fun setColors(){
-        baseColor= Color.parseColor(prefs!!.getString("BG","#000000"))
-        textColor = if(prefs!!.getString("TEXT","")=="")
-            getColor(R.color.design_default_color_on_primary)
-        else
-            Color.parseColor(prefs!!.getString("TEXT","#"))
-        textColor2 = if(prefs!!.getString("TEXT2","")=="")
-            getColor(R.color.design_default_color_on_primary)
-        else
-            Color.parseColor(prefs!!.getString("TEXT2","#"))
-        alpha = (prefs!!.getInt("ALPHA",50) / 100f * 255).toInt()
-        linearLayoutMain.setBackgroundColor(baseColor)
-        linearLayoutMain.background.alpha=alpha
-
-        buttonLauncherMenu.backgroundTintList = ColorStateList.valueOf(getColor(R.color.colorAppSelected))
+    private fun setInitialTab(){
+        currentTag=prefs!!.getString("CURRENT_TAG","")!!
+        if(currentTag!=""){
+            for (i in 0 until 10){
+                //check TAG_# exits
+                if(tabsIds[i].text!="" && prefs!!.getString(currentTag,"")==tabsIds[i].text){
+                    setTitlesColors(tabsIds[i])
+                    break
+                }
+            }
+        }else
+            setTitlesColors(textViewAllApps)
     }
 
     private fun showTagName(view: View, i:Int, rename:Boolean=false){
@@ -123,7 +203,7 @@ class LauncherActivity : AppCompatActivity() {
         val windowView=LayoutInflater.from(this).inflate(R.layout.tag_name, gridMyApps, false)
         passWindow.contentView=windowView
         passWindow.isFocusable=true
-        passWindow.width=calculateSizeOfView(this,2)
+        passWindow.width=(resources.displayMetrics.widthPixels-10.dp)/2
         passWindow.showAsDropDown(view)
         windowView.create_tag_cancel.setOnClickListener{
             passWindow.dismiss()
@@ -150,55 +230,6 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        val objCmd= RunCommand()
-        listTabs(objCmd,currentTag)
-        getApps(objCmd,prefs!!.getInt("my_apps_columns",6),currentTag)
-        super.onResume()
-    }
-
-    private fun listTabs(objCmd: RunCommand, cTag:String=""){
-        var columns=0
-        gridTitlesMyApps.removeAllViews()
-        for (i in 0 until 10){
-            if(prefs!!.getString("TAG_$i","")!=""){
-                columns++
-            }
-        }
-        if(cTag==""){
-            textViewAllApps.setBackgroundColor(getColor(R.color.colorAppSelected))
-        }
-        tabsIds= arrayListOf()
-        for (i in 0 until 10){
-            val tabI=prefs!!.getString("TAG_$i","")
-            if(tabI!=""){
-                val tagId="TAG_$i"
-                val tab=TextView(this)
-                tab.id=i
-                tabsIds.add(tab)
-                tab.textSize=24F
-                tab.text=tabI
-                tab.setTypeface(null, Typeface.BOLD)
-                tab.gravity=Gravity.CENTER_HORIZONTAL
-                if(cTag!="" && cTag==tagId){
-                    tab.setBackgroundColor(getColor(R.color.colorAppSelected))
-                }
-                tab.setPadding(10,0,10,0)
-                tab.layoutParams=GridLayout.LayoutParams(LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)).apply {
-                    columnSpec=GridLayout.spec(i, 1f)
-                }
-                tab.setOnClickListener {
-                    changeTab(tagId,objCmd,tab)
-                }
-                tab.setOnLongClickListener {
-                    showTagTitleMenu(tab,objCmd,tagId)
-                    true
-                }
-                gridTitlesMyApps.addView(tab)
-            }
-        }
-    }
-
     private fun changeTab(tagId:String, objCmd:RunCommand, tab:View){
         currentTag=tagId
         prefs!!.edit().putString("CURRENT_TAG", currentTag).apply()
@@ -209,22 +240,41 @@ class LauncherActivity : AppCompatActivity() {
     private fun setTitlesColors(tab:View){
         textViewAllApps.background=gridTitlesMyApps.background
         if(tab==textViewAllApps)
-            textViewAllApps.setBackgroundColor(getColor(R.color.colorAppSelected))
+            textViewAllApps.setBackgroundColor(itemColor)
         for (tabTile in tabsIds){
+            if(tabTile.text=="")
+                continue
             if(tab!=tabTile)
                 tabTile.background=gridTitlesMyApps.background
             else{
-                tab.setBackgroundColor(getColor(R.color.colorAppSelected))
+                tab.setBackgroundColor(itemColor)
             }
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun getApps(objCmd:RunCommand, cols:Int, tag:String=""){
         val dbHandler = Db(this, null)
-        val appsVal=dbHandler.getData("app", if(tag!="")"`tag` like '%|$tag|%'" else "")
         var col=0
         var row=0
+        val apps=checkUninstalledApps(tag, dbHandler)
+        apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
+        val columns=if (apps.count() in 1 until cols) apps.count() else cols
+        gridMyApps.removeAllViews()
+        gridMyApps.columnCount=columns
+        val cellSize = (resources.displayMetrics.widthPixels-10.dp)/cols
+        for((c, app) in apps.withIndex()){
+            createAppView(tag, app, cellSize, objCmd, row, col, dbHandler, c)
+            col++
+            if(col >0 && col.rem(columns)==0){
+                col=0
+                row++
+            }
+        }
+        setLauncherSize(cellSize)
+    }
+
+    private fun checkUninstalledApps(tag: String, dbHandler: Db):ArrayList<ArrayList<String>>{
+        val appsVal=dbHandler.getData("app", if(tag!="")"`tag` like '%|$tag|%'" else "")
         var valDel = false
         for(app in appsVal) {
             try {
@@ -235,62 +285,69 @@ class LauncherActivity : AppCompatActivity() {
                 valDel=true
             }
         }
-        val apps=if(valDel)dbHandler.getData("app", if(tag!="")"`tag`like'%|$tag|%'" else "") else appsVal
-        apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
-        val columns=if (apps.count() in 1 until cols) apps.count() else cols
-        gridMyApps.removeAllViews()
-        gridMyApps.columnCount=columns
-        val cellSize = calculateSizeOfView(baseContext, cols) -(5*Resources.getSystem().displayMetrics.density).toInt()
-        for((c, app) in apps.withIndex()){
-            val ll = LinearLayout(this)
+        return if(valDel)dbHandler.getData("app", if(tag!="")"`tag`like'%|$tag|%'" else "") else appsVal
+    }
+
+    private fun createAppView(tag:String, app: ArrayList<String>, cellSize: Int, objCmd: RunCommand, row:Int, col:Int, dbHandler: Db, c:Int){
+        doAsync {
+            val ll = LinearLayout(this@LauncherActivity)
             ll.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             ll.orientation = LinearLayout.VERTICAL
 
-            val img = ImageView(this)
+            val img = ImageView(this@LauncherActivity)
             img.setImageDrawable(packageManager.getApplicationIcon(app[0]))
-            val imgParams = LinearLayout.LayoutParams(80,80)
-            img.layoutParams=imgParams
+            val imgSize=if(cellSize>80) 80 else cellSize
+            img.layoutParams=LinearLayout.LayoutParams(imgSize, imgSize).apply {
+                setMargins(0,10,0,10)
+            }
+            img.setPadding(0,0,0,0)
 
-            val text = TextView(this)
+            val text = TextView(this@LauncherActivity)
             val dataTitle= if (app[1].length> 10) app[1].substring(0,10)+".." else app[1]
-            if(prefs!!.getString("LABELS","")!="OFF"){
+            if(prefs!!.getString("LABELS","")=="ON"){
                 if(tag=="" && (app[3]=="||" || app[3]==""))
                     text.paintFlags= Paint.UNDERLINE_TEXT_FLAG
                 text.text= dataTitle
                 text.id= c
                 text.setTextColor( if(packageManager.getApplicationInfo(app[0], 0).enabled)textColor else textColor2)
                 text.maxLines=1
+                text.layoutParams=LinearLayout.LayoutParams(
+                    cellSize,LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                    setMargins(0,0,0,10)
+                }
                 text.gravity=Gravity.CENTER_HORIZONTAL
                 text.setTypeface(null, Typeface.BOLD)
+                text.setPadding(0,0,0,0)
             }
             ll.addView(img)
             ll.addView(text)
             ll.gravity=Gravity.CENTER
+            ll.setPadding(0,0,0,0)
             ll.layoutParams=GridLayout.LayoutParams(ViewGroup.LayoutParams(cellSize, GridLayout.LayoutParams.WRAP_CONTENT)).apply {
                 columnSpec=GridLayout.spec(col)
                 rowSpec=GridLayout.spec(row)
-                setMargins(20,20,20,20)
+                setMargins(0,0,0,0)
             }
-            gridMyApps.addView(ll)
-            ll.setOnClickListener {
-                launchApp(objCmd, app)
-                text.setTextColor(textColor)
-            }
-            //menu
-            ll.setOnLongClickListener {
-                showAppMenu(ll, objCmd, dbHandler, app, text)
-                true
-            }
-            col++
-            if(col >0 && col.rem(columns)==0){
-                col=0
-                row++
+            uiThread {
+                gridMyApps.addView(ll)
+                ll.setOnClickListener {
+                    launchApp(objCmd, app)
+                    text.setTextColor(textColor)
+                }
+                //menu
+                ll.setOnLongClickListener {
+                    showAppMenu(ll, objCmd, dbHandler, app, text)
+                    true
+                }
+
             }
         }
+    }
 
+    private fun setLauncherSize(cellSize:Int){
         val screenSize = resources.displayMetrics.heightPixels-150
         when(prefs!!.getString("HEIGHT","HALF")){
             "FULL" ->{
@@ -309,34 +366,14 @@ class LauncherActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun moveTab(objCmd: RunCommand, left:Boolean=false){
-        val cTab=prefs!!.getString(currentTag,"")
-        var pos=0
-        for ((c, tab) in tabsIds.withIndex()){
-            if(tab.text==cTab){
-                pos=if(left && c>=0) c-1
-                else if(!left && c<tabsIds.count()-1) c+1
-                else if(!left) tabsIds.count()-1
-                else 0
-                break
-            }
-        }
-        currentTag=if(pos==-1)"" else "TAG_$pos"
-        prefs!!.edit().putString("CURRENT_TAG", currentTag).apply()
-        setTitlesColors(if(pos==-1) textViewAllApps else tabsIds[pos])
-        getApps(objCmd,prefs!!.getInt("my_apps_columns",6),currentTag)
-    }*/
-
-    private fun calculateSizeOfView(context: Context, columns:Int): Int {
-        val displayMetrics = context.resources.displayMetrics
-        val dpWidth = displayMetrics.widthPixels
-        return (dpWidth / columns)
-    }
-
     private fun launchApp(objCmd:RunCommand, app: ArrayList<String>) {
         objCmd.enableApp(baseContext, app)
-        val intent: Intent = packageManager.getLaunchIntentForPackage(app[0])!!
-        startActivity(intent)
+        try{
+            val intent: Intent = packageManager.getLaunchIntentForPackage(app[0])!!
+            startActivity(intent)
+        }catch (ex:KotlinNullPointerException){
+            Toast.makeText(this, getString(R.string.root_needed), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun changeAll(objCmd:RunCommand, enable:Boolean=false,tag:String=""){
@@ -351,41 +388,62 @@ class LauncherActivity : AppCompatActivity() {
                 findViewById<TextView>(c).setTextColor(if (enable) textColor else textColor2)
             }catch (ex:NullPointerException){}
         }
-        Toast.makeText(this, getString(if (enable)R.string.AllAppsEnabled else R.string.AllAppsDisabled), Toast.LENGTH_SHORT).show()
-        //exitProcess(0)
     }
 
     private fun showConfigMenu(view: View, objCmd: RunCommand) {
-        val popupConfig = PopupMenu(this, view)
-        popupConfig.inflate(R.menu.menu_launcher)
-        popupConfig.setOnMenuItemClickListener{ item: MenuItem? ->
-            when (item!!.itemId) {
-                R.id.menuConfig -> {
-                    finish()
-                    val intent = Intent(this, AppsActivity::class.java)
-                    intent.putExtra("CONFIG", "1")
-                    startActivity(intent)
-                }
-                R.id.menuApps -> {
-                    finish()
-                    val intent = Intent(this, AppsActivity::class.java)
-                    intent.putExtra("TAG", currentTag)
-                    startActivity(intent)
-                }
-                R.id.menuDisableAll -> {
-                    doAsync {
-                        changeAll(objCmd)
-                    }
-                }
-                R.id.menuEnableAll -> {
-                    doAsync {
-                        changeAll(objCmd, true)
-                    }
+        animateMenu()
+
+        buttonLauncherConfig.setOnClickListener {
+            finish()
+            val intent = Intent(this, AppsActivity::class.java)
+            intent.putExtra("CONFIG", "1")
+            startActivity(intent)
+        }
+        buttonLauncherEditApps.setOnClickListener {
+            finish()
+            val intent = Intent(this, AppsActivity::class.java)
+            intent.putExtra("TAG", currentTag)
+            startActivity(intent)
+        }
+        buttonLauncherDisableAll.setOnClickListener {
+            doAsync {
+                changeAll(objCmd)
+                uiThread {
+                    Toast.makeText(this@LauncherActivity, getString(R.string.AllAppsDisabled), Toast.LENGTH_SHORT).show()
                 }
             }
-            true
+            animateMenu()
         }
-        popupConfig.show()
+        buttonLauncherEnableAll.setOnClickListener {
+            doAsync {
+                changeAll(objCmd, true)
+                uiThread {
+                    Toast.makeText(this@LauncherActivity, getString(R.string.AllAppsEnabled), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+    private fun animateMenu(){
+        val p1:Float
+        val p2:Float
+        if(!configLayout.isVisible){
+            p1=configLayout.width.toFloat()
+            p2=0f
+            configLayout.isVisible=true
+            buttonLauncherMenu.setImageDrawable(getDrawable(R.drawable.ic_arrow_right))
+        }
+        else{
+            p1=0f
+            p2=configLayout.width.toFloat()
+            configLayout.isVisible=false
+            buttonLauncherMenu.setImageDrawable(getDrawable(R.drawable.ic_arrow_left))
+        }
+        val animate = TranslateAnimation(p1, p2, 0f, 0f)
+        animate.duration = 500
+        //animate.fillAfter = true
+        configLayout.startAnimation(animate)
     }
 
     private fun showAppMenu(view: View, objCmd: RunCommand, dbHandler:Db, app: ArrayList<String>, text:TextView) {
@@ -400,14 +458,14 @@ class LauncherActivity : AppCompatActivity() {
             val tagId="|TAG_$i|"
             val mm = popup.menu.findItem(menus[i])
             if(tag!=""){
-                mm.title = tag
-                if(app[3]!=null && app[3].contains(tagId)){
-                    mm.setIcon(R.drawable.ic_check)
-                }
+                if(!app[3].isBlank() && app[3].contains(tagId)){
+                    mm.title="$tag ✔"
+                }else
+                     mm.title = tag
                 mm.setOnMenuItemClickListener {
                     val tags:String
                     val msg:String
-                    if(app[3]!=null && app[3].contains(tagId)){
+                    if(!app[3].isBlank() && app[3].contains(tagId)){
                         tags=app[3].replace(tagId,"")
                         msg=getString(R.string.RemovedToTag, tag)
                     }else{
@@ -415,7 +473,7 @@ class LauncherActivity : AppCompatActivity() {
                         msg=getString(R.string.AddedToTag, tag)
                     }
                     recreate()
-                    dbHandler.editData("app","`id`='${app[0]}'", hashMapOf("tag" to tags) )
+                    dbHandler.editData("app","`id`='${app[0]}'", hashMapOf("`tag`" to tags) )
                     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -464,8 +522,11 @@ class LauncherActivity : AppCompatActivity() {
                     val dbHandler = Db(this, null)
                     doAsync {
                         prefs!!.edit().remove(tagId).apply()
+                        println("remove!!!!")
                         dbHandler.replaceFieldData("`app`","`tag`", "|$tagId|", "" )
                     }
+                    prefs!!.edit().remove(tagId).apply()
+                    prefs!!.edit().putString("CURRENT_TAG", "").apply()
                     Toast.makeText(this, tagId, Toast.LENGTH_SHORT).show()
                     recreate()
                 }

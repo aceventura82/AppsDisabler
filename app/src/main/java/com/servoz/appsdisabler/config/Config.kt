@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Switch
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate.*
@@ -47,18 +48,17 @@ class Config:Fragment() {
         prefs = requireContext().getSharedPreferences(prefFile, 0)
         theme()
         columns()
-        sysApps()
-        labels()
         launcherHeight()
+        changeSwitch("SYSTEM",switchSysApps)
+        changeSwitch("LABELS",switchHideLabels)
+        changeSwitch("SHOW_TABS",switchTabs)
 
-        val colors= arrayListOf("#FFFFFF", "#000000", "#aa0000", "#aa5500", "#005500",
-            "#00007f", "#aa007f", "#00557f", "#00aa7f", "#0000ff",
-            "#ff5500", "#550000", "#55007f", "#555500", "#55557f",
-            "#55aaff", "#5f5f5f", "#ffff00", "#ff00ff", "#d10000")
+        setColor("TEXT", requireContext().getColor(R.color.design_default_color_on_primary), buttonTextColor)
+        setColor("TEXT2", requireContext().getColor(R.color.colorAppDisabled), buttonDisTextColor)
+        setColor("ICONS_THEME", requireContext().getColor(R.color.colorIcons), buttonIconsColor)
+        setColor("ITEM_SEL", requireContext().getColor(R.color.colorAppSelected), buttonItemSelectedColor)
 
-        backgroundColors(colors)
-        enabledColor(colors)
-        disabledColor(colors)
+        backgroundColors()
     }
 
 
@@ -100,27 +100,14 @@ class Config:Fragment() {
         })
     }
 
-    private fun sysApps(){
-        switchSysApps.isChecked=prefs!!.getString("SYSTEM","")=="ON"
+    private fun changeSwitch(key:String, view:Switch){
+        view.isChecked=prefs!!.getString(key,"")!=""
 
-        switchSysApps.setOnClickListener{
-            if(switchSysApps.isChecked)
-                prefs!!.edit().putString("SYSTEM", "ON").apply()
-            else {
-                prefs!!.edit().putString("SYSTEM", "").apply()
-            }
-        }
-    }
-
-    private fun labels(){
-        switchHideLabels.isChecked=prefs!!.getString("LABELS","")!="OFF"
-
-        switchHideLabels.setOnClickListener{
-            if(switchHideLabels.isChecked)
-                prefs!!.edit().putString("LABELS", "").apply()
-            else {
-                prefs!!.edit().putString("LABELS", "OFF").apply()
-            }
+        view.setOnClickListener{
+            if(view.isChecked)
+                prefs!!.edit().putString(key, "ON").apply()
+            else
+                prefs!!.edit().putString(key, "").apply()
         }
     }
 
@@ -153,26 +140,9 @@ class Config:Fragment() {
         })
     }
 
-    private fun backgroundColors(colors:ArrayList<String>){
-        if(prefs!!.getString("BG","")!="")
-            buttonBgColor.setBackgroundColor(Color.parseColor(prefs!!.getString("BG","")))
-        else
-            buttonBgColor.setBackgroundColor(requireContext().getColor(R.color.design_default_color_primary))
-
-        buttonBgColor.setOnClickListener {
-            val colorPicker = ColorPicker(activity)
-            colorPicker.setColors(colors)
-            colorPicker.show()
-            colorPicker.setOnChooseColorListener(object : OnChooseColorListener {
-                override fun onChooseColor(position: Int, color: Int) {
-                    prefs!!.edit().putString("BG", colors[position]).apply()
-                    buttonBgColor.setBackgroundColor(Color.parseColor(colors[position]))
-                }
-                override fun onCancel() {}
-            })
-        }
-
-        var cAlpha=prefs!!.getInt("ALPHA",100)
+    private fun backgroundColors(){
+        setColor("BG", requireContext().getColor(R.color.design_default_color_primary), buttonBgColor)
+        var cAlpha=prefs!!.getInt("ALPHA",50)
         bgAlpha.progress=cAlpha
         textAlpha.text=cAlpha.toString()
 
@@ -187,42 +157,25 @@ class Config:Fragment() {
             }
         })
     }
-
-    private fun enabledColor(colors:ArrayList<String>){
-        if(prefs!!.getString("TEXT","")!="")
-            buttonTextColor.setBackgroundColor(Color.parseColor(prefs!!.getString("TEXT","")))
+    
+    private fun setColor(key:String, defaultColor:Int, view:View){
+        val colors= arrayListOf(
+            "#d50000","#F44336","#E91E63","#FF5722","#FF9800","#9C27B0","#673AB7","#3F51B5","#2196F3","#03A9F4",
+            "#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39","#FFEB3B","#FFC107",
+            "#795548","#3E2723","#9E9E9E","#607D8B","#607D8B","#BDBDBD","#FFFFFF", "#000000")
+         if(prefs!!.getString(key,"")!="")
+             view.setBackgroundColor(Color.parseColor(prefs!!.getString(key,"")))
         else
-            buttonTextColor.setBackgroundColor(requireContext().getColor(R.color.design_default_color_on_primary))
+             view.setBackgroundColor(defaultColor)
 
-        buttonTextColor.setOnClickListener {
+        view.setOnClickListener {
             val colorPicker = ColorPicker(activity)
             colorPicker.setColors(colors)
             colorPicker.show()
             colorPicker.setOnChooseColorListener(object : OnChooseColorListener {
                 override fun onChooseColor(position: Int, color: Int) {
-                    prefs!!.edit().putString("TEXT", colors[position]).apply()
-                    buttonTextColor.setBackgroundColor(Color.parseColor(colors[position]))
-                }
-                override fun onCancel() {}
-            })
-        }
-
-    }
-
-    private fun disabledColor(colors:ArrayList<String>){
-         if(prefs!!.getString("TEXT2","")!="")
-            buttonDisTextColor.setBackgroundColor(Color.parseColor(prefs!!.getString("TEXT2","")))
-        else
-            buttonDisTextColor.setBackgroundColor(Color.RED)
-
-        buttonDisTextColor.setOnClickListener {
-            val colorPicker = ColorPicker(activity)
-            colorPicker.setColors(colors)
-            colorPicker.show()
-            colorPicker.setOnChooseColorListener(object : OnChooseColorListener {
-                override fun onChooseColor(position: Int, color: Int) {
-                    prefs!!.edit().putString("TEXT2", colors[position]).apply()
-                    buttonDisTextColor.setBackgroundColor(Color.parseColor(colors[position]))
+                    prefs!!.edit().putString(key, colors[position]).apply()
+                    view.setBackgroundColor(Color.parseColor(colors[position]))
                 }
                 override fun onCancel() {}
             })

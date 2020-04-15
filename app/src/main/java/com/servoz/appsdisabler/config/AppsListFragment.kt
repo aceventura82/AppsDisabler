@@ -1,7 +1,7 @@
 package com.servoz.appsdisabler.config
 
 import android.content.Intent
-import android.content.SharedPreferences
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.servoz.appsdisabler.AppsActivity
 import com.servoz.appsdisabler.LauncherActivity
 import com.servoz.appsdisabler.R
 import kotlinx.android.synthetic.main.fragment_apps.*
@@ -61,10 +60,11 @@ class AppsListFragment: Fragment(),androidx.appcompat.widget.SearchView.OnQueryT
         val pm = requireContext().packageManager
         val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
         val apps= mutableListOf<SearchApps>()
+        val mask = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP
         for (packageInfo in packages) {
             if(packageInfo.packageName == "com.servoz.appsdisabler")
                 continue
-            if(systemApps || (!systemApps && packageInfo.sourceDir.contains( "/data/app/"))){
+            if(systemApps || (!systemApps && packageInfo.flags and mask==0)){
                 val status = requireActivity().packageManager.getApplicationInfo(packageInfo.packageName, 0).enabled
                 apps.add(
                     SearchApps(

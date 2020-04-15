@@ -18,13 +18,13 @@ class Db(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenH
         //when upgrading
     }
 
-    fun dbUpd(){
+    /*fun dbUpd(){
         //Db(context, null).dbUpd()
         val db = this.writableDatabase
         db.execSQL("DROP TABLE `app`")
         db.execSQL("CREATE TABLE `app`( `id` TEXT PRIMARY KEY, name TEXT, `launcher` TEXT, tag TEXT)")
         db.close()
-    }
+    }*/
 
     fun addData(table:String, data:HashMap<String, String>) {
         // println("DEBUG:DB ADD $table")
@@ -59,18 +59,11 @@ class Db(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenH
         return rows
     }
 
-    fun deleteById(table:String,id: String): Boolean {
-        val query = "SELECT * FROM $table WHERE id = '$id'"
+    fun deleteById(table:String,id: String) {
+        val query = "DELETE FROM $table WHERE id = '$id'"
         val db = this.writableDatabase
-        val cursor = db.rawQuery(query, null)
-        if (cursor.moveToFirst()) {
-            db.delete(table, "id = ?", arrayOf(id))
-            cursor.close()
-        }
-        if(cursor.moveToFirst())
-            return true
+        db.execSQL(query)
         db.close()
-        return false
     }
 
     /*fun deleteWhere(table:String,where: String=""):Boolean {
@@ -113,7 +106,7 @@ class Db(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenH
                 "SET $field=REPLACE($field,'$oldValue','$replace')" +
                 if(where !="") "WHERE $where" else ""
         val db = this.writableDatabase
-        val cursor = db.rawQuery(query, null)
-        cursor.close()
+        db.execSQL(query)
+        db.close()
     }
 }

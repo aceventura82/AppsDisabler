@@ -57,6 +57,12 @@
                     android:text="@string/lightTheme" />
             </RadioGroup>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="?android:attr/listDivider" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,64 +97,6 @@
                     android:padding="10dp"
                     android:min="1"
                     android:max="10" />
-            </LinearLayout>
-
-             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 android:textSize="20sp"
-                 android:layout_margin="5dp"
-                android:text="@string/system_apps" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/system_apps_desc" />
-
-                <Switch
-                    android:id="@+id/switchSysApps"
-                    android:paddingStart="20dp"
-                    android:layout_weight="1"
-                    android:paddingEnd="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content" />
-
-            </LinearLayout>
-
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:textSize="20sp"
-               android:layout_margin="5dp"
-               android:text="@string/labels" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/labels_desc" />
-
-                <Switch
-                    android:id="@+id/switchHideLabels"
-                    android:paddingStart="20dp"
-                    android:layout_weight="1"
-                    android:paddingEnd="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content" />
-
             </LinearLayout>
 
             <TextView
@@ -187,6 +135,106 @@
                     android:max="5" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="2"
+                android:background="?android:attr/listDivider" />
+
+             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:textSize="20sp"
+                 android:layout_margin="5dp"
+                android:text="@string/system_apps" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system_apps_desc" />
+
+                <Switch
+                    android:id="@+id/switchSysApps"
+                    android:paddingStart="20dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:textSize="20sp"
+                 android:layout_margin="5dp"
+                android:text="@string/tabs" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tabs_desc" />
+
+                <Switch
+                    android:id="@+id/switchTabs"
+                    android:paddingStart="20dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textSize="20sp"
+               android:layout_margin="5dp"
+               android:text="@string/labels" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/labels_desc" />
+
+                <Switch
+                    android:id="@+id/switchHideLabels"
+                    android:paddingStart="20dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="2"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -284,6 +332,64 @@
 
                 <Button
                     android:id="@+id/buttonDisTextColor"
+                    android:layout_width="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                android:text="@string/icons" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/icons_desc" />
+
+                <Button
+                    android:id="@+id/buttonIconsColor"
+                    android:layout_width="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                android:text="@string/item_selected" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/item_selected_desc" />
+
+                <Button
+                    android:id="@+id/buttonItemSelectedColor"
                     android:layout_width="30dp"
                     android:layout_marginEnd="10dp"
                     android:layout_height="30dp" />

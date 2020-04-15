@@ -34,7 +34,7 @@
     <string name="NoMoreTabs">Cannot Create more tabs</string>
     <string name="add">Add</string>
     <string name="tag">Tag</string>
-    <string name="AddedToTag">Addedd to Tag %1$s</string>
+    <string name="AddedToTag">Added to Tag %1$s</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
     <string name="RemovedToTag">Removed from Tag %1$s</string>
@@ -56,4 +56,13 @@
     <string name="background_desc">Set the background color and transparency for the launcher</string>
     <string name="enable_app_text_desc">Set the font color for the apps when enabled</string>
     <string name="disable_app_text_desc">Set the font color for the apps when disabled</string>
+    <string name="icons">Icons</string>
+    <string name="icons_desc">Set The colors for the App Icons (All Apps, Add Tab, Config) </string>
+    <string name="item_selected">Item Selected</string>
+    <string name="item_selected_desc">Set the background for the tab selected</string>
+    <string name="tabs">Tabs</string>
+    <string name="tabs_desc">Show Tabs in the launcher</string>
+    <string name="root_needed">This application Need Root Access To disable/Enable Applications</string>
+    <string name="tags_disabled">Tags Disabled!</string>
+    <string name="text_append_tag">%1$s %2$s</string>
 </resources>
