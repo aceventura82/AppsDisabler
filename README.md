@@ -5,3 +5,7 @@ This application need ROOT to diable applications
 This is an Open Source version of IceBox App
 
 
+Screenshots:
+
+
+![Main View](../assets/main.png?raw=true)
