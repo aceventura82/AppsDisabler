@@ -15,12 +15,13 @@
             android:layout_width="match_parent"
             android:id="@+id/gridItemMyGames"
             app:columnCount="4"
-            app:rowCount="1"
+            app:rowCount="2"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/imageItemAppIcon"
                 app:layout_row="0"
                 app:layout_column="0"
+                app:layout_rowSpan="2"
                 android:layout_height="40dp"
                 android:layout_width="60dp"
                 app:layout_gravity="end"
@@ -36,12 +37,23 @@
                 android:paddingEnd="5dp"
                 app:layout_gravity="center_vertical"
                 android:textAlignment="textStart" />
+            <TextView
+                android:id="@+id/textItemTags"
+                app:layout_row="1"
+                app:layout_column="1"
+                app:layout_columnWeight="3"
+                android:paddingStart="5dp"
+                android:textSize="12sp"
+                android:paddingEnd="5dp"
+                app:layout_gravity="center_vertical"
+                android:textAlignment="textStart" />
 
             <Switch
                 android:id="@+id/switchAppsStatus"
                 app:layout_row="0"
                 app:layout_column="2"
-                app:layout_gravity="start"
+                app:layout_rowSpan="2"
+                app:layout_gravity="center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_height="wrap_content" />
@@ -50,7 +62,8 @@
                 android:id="@+id/switchAppsLauncher"
                 app:layout_row="0"
                 app:layout_column="3"
-                app:layout_gravity="start"
+                app:layout_gravity="center"
+                app:layout_rowSpan="2"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_height="wrap_content" />

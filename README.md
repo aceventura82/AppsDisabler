@@ -4,6 +4,11 @@ This application need ROOT to diable applications
 
 This is an Open Source version of IceBox App
 
+CHANGES:
+* Added Slide to change tags
+* Added First Run Helps
+
+
 APK:
 <a href="../asserts/app_disabler_SIGNED.apk" >Download </a>
 

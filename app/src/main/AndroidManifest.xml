@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AppsActivity"/>
+        <activity android:name=".LauncherSlideActivity"/>
     </application>
 
 </manifest>

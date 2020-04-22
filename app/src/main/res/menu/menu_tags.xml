@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tabList0" android:title="@string/tag" />
+    <item android:id="@+id/tabList1" android:title="@string/tag" />
+    <item android:id="@+id/tabList2" android:title="@string/tag" />
+    <item android:id="@+id/tabList3" android:title="@string/tag" />
+    <item android:id="@+id/tabList4" android:title="@string/tag" />
+    <item android:id="@+id/tabList5" android:title="@string/tag" />
+    <item android:id="@+id/tabList6" android:title="@string/tag" />
+    <item android:id="@+id/tabList7" android:title="@string/tag" />
+    <item android:id="@+id/tabList8" android:title="@string/tag" />
+    <item android:id="@+id/tabList9" android:title="@string/tag" />
+</menu>

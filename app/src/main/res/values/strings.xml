@@ -65,4 +65,18 @@
     <string name="root_needed">This application Need Root Access To disable/Enable Applications</string>
     <string name="tags_disabled">Tags Disabled!</string>
     <string name="text_append_tag">%1$s %2$s</string>
+    <string name="help_apps1">Disable: Enable or disable application</string>
+    <string name="help_apps2">Launcher: Show or hide application in the launcher</string>
+    <string name="help_apps3">tap on app Name: Launcher/Disable, add to launcher and set to automatic Enable/Disable with Menu (Enable/Disable All) Buttons</string>
+    <string name="don_t_show_again">Don\'t show Again</string>
+    <string name="help_launcher1">To View All Applications (When tabs activated)</string>
+    <string name="help_launcher2">To Add a new tab (When tabs activated)</string>
+    <string name="help_launcher3">Applications settings</string>
+    <string name="help_launcher4">To modify the applications in launcher, or manually disable</string>
+    <string name="help_launcher5">Enable all applications marked to automatically disable/enable</string>
+    <string name="help_launcher6">Disable all applications marked to automatically disable/enable</string>
+    <string name="helps">Helps Windows</string>
+    <string name="labels_helps">Dsiplay all helps again</string>
+    <string name="reset">Reset</string>
+    <string name="help_reset">Helps View visible</string>
 </resources>

@@ -9,8 +9,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/Nextcloud/Dropbox/Dev/AndroidStudioProjects/AppsDisabler" />
-            <option value="$USER_HOME$/Nextcloud/Dropbox/Dev/AndroidStudioProjects/AppsDisabler/app" />
+            <option value="$USER_HOME$/Nextcloud/Dev/AndroidStudioProjects/AppsDisabler" />
+            <option value="$USER_HOME$/Nextcloud/Dev/AndroidStudioProjects/AppsDisabler/app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

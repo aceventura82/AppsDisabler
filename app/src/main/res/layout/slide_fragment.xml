@@ -1,0 +1,14 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<GridLayout
+    android:id="@+id/gridMyApps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="6"
+    android:padding="5dp"
+    android:paddingBottom="50dp" />
+
+</ScrollView>

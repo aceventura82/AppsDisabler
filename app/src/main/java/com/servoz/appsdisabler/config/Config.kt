@@ -59,8 +59,8 @@ class Config:Fragment() {
         setColor("ITEM_SEL", requireContext().getColor(R.color.colorAppSelected), buttonItemSelectedColor)
 
         backgroundColors()
+        resetHelps()
     }
-
 
     private fun theme(){
         when(prefs!!.getString("THEME","System")){
@@ -181,6 +181,14 @@ class Config:Fragment() {
             })
         }
 
+    }
+
+    private fun resetHelps(){
+        reset_helps_button.setOnClickListener {
+            prefs!!.edit().putString("HELP_APPS", "").apply()
+            prefs!!.edit().putString("HELP_LAUNCHER", "").apply()
+            Toast.makeText(requireContext(), getString(R.string.help_reset), Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

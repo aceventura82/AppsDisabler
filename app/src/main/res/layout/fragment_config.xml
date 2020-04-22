@@ -229,6 +229,34 @@
 
             </LinearLayout>
 
+            <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textSize="20sp"
+               android:layout_margin="5dp"
+               android:text="@string/helps" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/labels_helps" />
+
+                <Button
+                    android:id="@+id/reset_helps_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+            </LinearLayout>
+
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"

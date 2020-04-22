@@ -12,135 +12,124 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:id="@+id/linearLayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
+            android:orientation="vertical"
             android:paddingTop="10dp"
-            android:orientation="vertical">
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutTags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/textViewAllApps"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingStart="20dp"
-                android:paddingEnd="25dp"
-                android:src="@drawable/ic_view_all"
-                android:textColor="#fff"
-                android:contentDescription="@string/all" />
-
-            <GridLayout
-                android:id="@+id/gridTitlesMyApps"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:rowCount="1"
-                android:columnCount="10"
-                android:layout_weight="1"
-                android:padding="0dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-            </GridLayout>
-            <ImageView
-                android:id="@+id/textViewAddTab"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:src="@drawable/ic_add"
-                android:textColor="#fff"
-                android:contentDescription="@string/add" />
-        </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/scrollMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <GridLayout
-                android:id="@+id/gridMyApps"
+            <LinearLayout
+                android:id="@+id/linearLayoutTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="6"
-                android:paddingBottom="50dp"
-                android:padding="5dp" />
+                android:orientation="horizontal"
+                android:padding="0dp">
 
-        </ScrollView>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayoutLauncher"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/textViewAddTab"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/add"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:src="@drawable/ic_add"
+                    android:layout_width="wrap_content" />
 
-    <GridLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/configLayout"
-            android:visibility="invisible"
-            android:layout_columnWeight="1">
-
-            <ImageView
-                android:id="@+id/buttonLauncherConfig"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/ic_settings"
-                android:textColor="#fff"
-                android:contentDescription="@string/add" />
-
-            <ImageView
-                android:id="@+id/buttonLauncherEditApps"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/ic_playlist"
-                android:layout_weight="1"
-                android:textColor="#fff"
-                android:contentDescription="@string/add" />
-
-            <ImageView
-                android:id="@+id/buttonLauncherDisableAll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/ic_flash_off"
-                android:layout_weight="1"
-                android:textColor="#fff"
-                android:contentDescription="@string/add" />
-
-            <ImageView
-                android:id="@+id/buttonLauncherEnableAll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/ic_flash_on"
-                android:layout_weight="1"
-                android:textColor="#fff"
-                android:contentDescription="@string/add" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/buttonLauncherMenu"
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:layout_gravity="end|bottom"
-            android:paddingEnd="15dp"
-            android:src="@drawable/ic_arrow_left"
-            android:textColor="#fff"
-            android:contentDescription="@string/add" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    </GridLayout>
+            <LinearLayout
+                android:id="@+id/configLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="1"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/buttonLauncherConfig"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_settings"
+                    android:textColor="#fff" />
+
+                <ImageView
+                    android:id="@+id/buttonLauncherEditApps"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_playlist"
+                    android:textColor="#fff" />
+
+                <ImageView
+                    android:id="@+id/buttonLauncherDisableAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_flash_off"
+                    android:textColor="#fff" />
+
+                <ImageView
+                    android:id="@+id/buttonLauncherEnableAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_flash_on"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/buttonLauncherMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:contentDescription="@string/add"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:src="@drawable/ic_arrow_left"
+                android:textColor="#fff" />
+
+        </GridLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
