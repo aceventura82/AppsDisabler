@@ -5,11 +5,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.View.GONE
+import android.view.*
 import android.view.animation.TranslateAnimation
 import android.widget.LinearLayout
 import android.widget.PopupMenu
@@ -242,24 +238,11 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun setLauncherSize(){
-        val cellSize = (resources.displayMetrics.widthPixels-10.dp)/prefs!!.getInt("my_apps_columns",6)
-        val screenSize = resources.displayMetrics.heightPixels-150
-        when(prefs!!.getString("HEIGHT","HALF")){
-            "FULL" ->{
-                EmptyViewMain.visibility=GONE
-                mainMyAppsLayout.setBackgroundColor(baseColor)
-                mainMyAppsLayout.background.alpha=alpha
-                linearLayoutMain.setBackgroundColor(baseColor)
-                linearLayoutMain.background.alpha=0
-                linearLayoutMain.layoutParams.height=LinearLayout.LayoutParams.MATCH_PARENT
-            }
-            "HIGH" ->{ linearLayoutMain.layoutParams.height=(screenSize*0.75).toInt() }
-            "BOTTOM" ->{ linearLayoutMain.layoutParams.height=(cellSize*2.5).toInt() }
-            "MIN" -> {
-                linearLayoutMain.layoutParams.height=LinearLayout.LayoutParams.WRAP_CONTENT
-            }
-            else -> {linearLayoutMain.layoutParams.height=(screenSize*0.5).toInt()}
-        }
+        val cellSize = (resources.displayMetrics.heightPixels-25.dp)/10
+        val h= prefs!!.getInt("HEIGHT",5)*cellSize
+        linearLayoutMain.layoutParams= LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+            if(h>resources.displayMetrics.heightPixels)resources.displayMetrics.heightPixels else h,
+            0f)
     }
 
     private fun changeAll(objCmd:RunCommand, enable:Boolean=false,tag:String=""){

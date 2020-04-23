@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:min="1"
-                    android:max="5" />
+                    android:max="10" />
 
             </LinearLayout>
 

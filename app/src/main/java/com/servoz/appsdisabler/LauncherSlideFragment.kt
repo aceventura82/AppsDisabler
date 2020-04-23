@@ -147,6 +147,8 @@ class LauncherSlideFragment : Fragment() {
         var hideMenu=true
         val menus= arrayListOf(R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9)
         for (i in 0 until 10){
+            if(tags.count()==0)
+                break
             val tag=tags[i]
             val tagId="|TAG_$i|"
             val mm = popup.menu.findItem(menus[i])

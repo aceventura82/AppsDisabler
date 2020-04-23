@@ -112,30 +112,18 @@ class Config:Fragment() {
     }
 
     private fun launcherHeight(){
-        var value=prefs!!.getString("HEIGHT","HALF")
-        launcherHeight.progress= when(value){
-            "FULL" -> 5
-            "HIGH" -> 4
-            "MIN" -> 2
-            "BOTTOM" -> 1
-            else -> 3
-        }
-        textViewHeight.text=value
+        var value=prefs!!.getInt("HEIGHT",5)
+        launcherHeight.progress= value
+        textViewHeight.text=value.toString()
 
         launcherHeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                value= when(progress){
-                    5 ->"FULL"
-                    4 -> "HIGH"
-                    2 -> "MIN"
-                    1->"BOTTOM"
-                    else -> "HALF"
-                }
-                textViewHeight.text =value
+                value= progress
+                textViewHeight.text =value.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                prefs!!.edit().putString("HEIGHT", value).apply()
+                prefs!!.edit().putInt("HEIGHT", value).apply()
             }
         })
     }
