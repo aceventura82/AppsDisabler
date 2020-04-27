@@ -60,10 +60,13 @@ class LauncherActivity : AppCompatActivity() {
         setColors()
         mainMyAppsLayout.setOnClickListener { finish() }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
+        val tagsPagesNames=ArrayList<String>()
+        for (i in 0 until 10)
+            tagsPagesNames.add(prefs!!.getString("TAG_$i","")!!)
         tabsPages.add(TagView("", prefs!!.getInt("my_apps_columns",6), textColor, textColor2,"",
-            prefs!!.getString("LABELS","")!!, arrayListOf()))
+            prefs!!.getString("LABELS","")!!, tagsPagesNames))
         if(prefs!!.getString("SHOW_TABS","")=="ON"){
-            createTagsViews()
+            createTagsViews(tagsPagesNames)
             newTab()
         }else{
             linearLayoutTags.isVisible=false
@@ -82,14 +85,6 @@ class LauncherActivity : AppCompatActivity() {
                 Thread.sleep(2000)
                 uiThread { showHelp() }
             }
-    }
-
-    override fun onDestroy() {
-        doAsync {
-            Thread.sleep(2000)
-            println("123")
-        }
-        super.onDestroy()
     }
 
     private fun setTheme(){
@@ -137,10 +132,7 @@ class LauncherActivity : AppCompatActivity() {
         buttonLauncherEnableAll.setColorFilter(iconsColors)
     }
 
-    private fun createTagsViews(){
-        val tagsPagesNames=ArrayList<String>()
-        for (i in 0 until 10)
-            tagsPagesNames.add(prefs!!.getString("TAG_$i","")!!)
+    private fun createTagsViews(tagsPagesNames:ArrayList<String>){
         val cols=prefs!!.getInt("my_apps_columns",6)
         val labels=prefs!!.getString("LABELS","")!!
         for (i in 0 until 10){
@@ -278,6 +270,9 @@ class LauncherActivity : AppCompatActivity() {
                 changeAll(objCmd)
                 uiThread {
                     Toast.makeText(this@LauncherActivity, getString(R.string.AllAppsDisabled), Toast.LENGTH_SHORT).show()
+                    finish()
+                    val intent = Intent(this@LauncherActivity, LauncherActivity::class.java)
+                    startActivity(intent)
                 }
             }
             animateMenu()
@@ -287,6 +282,9 @@ class LauncherActivity : AppCompatActivity() {
                 changeAll(objCmd, true)
                 uiThread {
                     Toast.makeText(this@LauncherActivity, getString(R.string.AllAppsEnabled), Toast.LENGTH_SHORT).show()
+                    finish()
+                    val intent = Intent(this@LauncherActivity, LauncherActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }
