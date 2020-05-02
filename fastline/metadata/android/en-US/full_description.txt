@@ -1,0 +1,7 @@
+Disable/Enable Any application using a easy access launcher. This application need ROOT to disable applications
+
+This is an Open Source version of IceBox App
+
+Source Code : https://github.com/aceventura82/AppsDisabler
+
+Website: https://www.servoz.tk/app-disabler/

@@ -1,0 +1,3 @@
+Disable any applications, and easily enable it
+with a pretty customisable launcher
+
