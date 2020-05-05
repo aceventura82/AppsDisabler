@@ -347,10 +347,12 @@ class LauncherActivity : AppCompatActivity() {
         val windowView=LayoutInflater.from(this).inflate(R.layout.help_launcher, mainMyAppsLayout, false)
         helpWindow.contentView=windowView
         helpWindow.isOutsideTouchable=true
-        windowView.layoutHelp.setBackgroundColor(Color.BLACK)
+        windowView.layoutHelp.setBackgroundColor(getColor(R.color.colorBG))
         windowView.layoutHelp.background.alpha=255
         windowView.checkBoxHelpApp.isChecked=prefs!!.getString("HELP_LAUNCHER","")=="OFF"
-        helpWindow.showAtLocation(linearLayoutMain, Gravity.CENTER, 0, 0)
+        linearLayoutMain.post{
+            helpWindow.showAtLocation(linearLayoutMain, Gravity.CENTER, 0, 0)
+        }
         windowView.checkBoxHelpApp.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked)
                 prefs!!.edit().putString("HELP_LAUNCHER", "OFF").apply()

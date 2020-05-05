@@ -104,7 +104,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                 if(appData[0][2]!="1")
                     itemView.gridItemMyGames.setBackgroundColor( fragment.requireContext().getColor(R.color.colorConfigApp))
             } else
-                itemView.textItemAppName.setTextColor(Color.GRAY)
+                itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.design_default_color_on_primary))
             val mask = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP
             val pm = fragment.requireContext().packageManager.getApplicationInfo(data[0] ,0)
             if(pm.flags and mask != 0)

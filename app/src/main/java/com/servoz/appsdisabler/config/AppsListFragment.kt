@@ -103,7 +103,7 @@ class AppsListFragment: Fragment(),androidx.appcompat.widget.SearchView.OnQueryT
         val windowView=LayoutInflater.from(requireContext()).inflate(R.layout.help_apps, CardTitleMyGames, false)
         helpWindow.contentView=windowView
         helpWindow.isOutsideTouchable=true
-        windowView.layoutHelp.setBackgroundColor(Color.BLACK)
+        windowView.layoutHelp.setBackgroundColor(requireContext().getColor(R.color.colorBG))
         windowView.layoutHelp.background.alpha=255
         windowView.checkBoxHelpApp.isChecked=prefs!!.getString("HELP_APPS","")=="OFF"
         helpWindow.showAtLocation(textItemTitle2, Gravity.CENTER, 0, 0)

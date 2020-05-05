@@ -1,9 +1,16 @@
 <resources>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorOnPrimary">#f5f5f5</item>
-        <item name="colorPrimary">#757575</item>
-        <item name="colorAccent">@color/colorAppSelected</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#F3F3F3</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#6D89D8</item>
+        <item name="colorSecondaryVariant">#14254F</item>
+        <item name="colorOnSecondary">#000000</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#000000</item>
+        <item name="colorSurface">#000000</item>
+        <item name="colorOnSurface">#615959</item>
+        <item name="colorOnBackground">#615959</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">

@@ -4,4 +4,5 @@
     <color name="colorAppDisabled">#f44336</color>
     <color name="colorIcons">#9E9E9E</color>
     <color name="colorConfigApp">#FF332F2F</color>
+    <color name="colorBG">#000000</color>
 </resources>
