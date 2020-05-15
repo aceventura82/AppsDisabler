@@ -12,6 +12,15 @@ CHANGES:
 APK:
 <a href="../asserts/app_disabler_SIGNED.apk" >Download </a>
 
+WebSite:
+<a href="https://www.servoz.tk/app-disabler/" >App Website </a>
+
+
+ <video width="320" height="240" controls>
+  <source src="https://www.servoz.tk/wp-content/uploads/2020/05/video.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video> 
+
 
 Screenshots:
 <div>
