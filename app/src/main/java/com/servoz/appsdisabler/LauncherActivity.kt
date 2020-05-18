@@ -156,11 +156,16 @@ class LauncherActivity : AppCompatActivity() {
                 true
             }
         }
-        tabStrip.getChildAt(0).setBackgroundResource(R.drawable.ic_view_all)
-        tabStrip.getChildAt(0).layoutParams=LinearLayout.LayoutParams(80,80)
+        if(prefs!!.getString("SHOW_ALL_TABS_B","")=="ON"){
+            tabStrip.getChildAt(0).setBackgroundResource(R.drawable.ic_view_all)
+            tabStrip.getChildAt(0).layoutParams=LinearLayout.LayoutParams(80,80)
+            tabStrip.getChildAt(0).isVisible=true
+        }else
+            tabStrip.getChildAt(0).isVisible=false
         tabLayoutLauncher.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 prefs!!.edit().putString("CURRENT_TAG", tabsPages[tabLayoutLauncher.selectedTabPosition].tag).apply()
+                currentTag = tabsPages[tabLayoutLauncher.selectedTabPosition].tag
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}

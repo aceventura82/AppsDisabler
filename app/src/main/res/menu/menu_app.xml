@@ -7,6 +7,9 @@
     android:id="@+id/menuAddApp"
     android:title="@string/add_auto_disable" />
 <item
+    android:id="@+id/menuRemoveAutoApp"
+    android:title="@string/remove_auto_app" />
+<item
     android:id="@+id/menuEnableApp"
     android:title="@string/enable_app" />
 <item

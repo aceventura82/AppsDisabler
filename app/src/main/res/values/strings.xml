@@ -79,4 +79,6 @@
     <string name="labels_helps">Dsiplay all helps again</string>
     <string name="reset">Reset</string>
     <string name="help_reset">Helps View visible</string>
+    <string name="remove_auto_app">Remove App from Auto Disable</string>
+    <string name="all_tabs_desc">Show All tabs button on launcher</string>
 </resources>

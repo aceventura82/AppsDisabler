@@ -1,7 +1,6 @@
 package com.servoz.appsdisabler.config
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +19,6 @@ import com.servoz.appsdisabler.tools.RunCommand
 import com.servoz.appsdisabler.tools.Db
 import com.servoz.appsdisabler.tools.DynamicSearchAdapter
 import kotlinx.android.synthetic.main.item_apps_layout.view.*
-import org.jetbrains.anko.doAsync
 
 
 class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : DynamicSearchAdapter<SearchApps>(dataList) {
@@ -126,11 +123,13 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                 if(itemView.switchAppsLauncher.isChecked){
                     dbHandler.addData("app", hashMapOf("id" to data[0], "name" to data[1], "launcher" to "1", "tag" to tag) )
                     itemView.textItemAppName.setTextColor( fragment.requireContext().getColor(R.color.design_default_color_on_primary))
+                    setTags(arrayListOf(arrayListOf("","","", tag)))
                 }
                 else{
                     dbHandler.deleteById("app", data[0])
                     defaultBG(itemView.gridItemMyGames)
                     itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.colorAppDisabled))
+                    itemView.textItemAppName.text = ""
                 }
             }
         }
@@ -145,6 +144,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                     itemView.textItemTags.text=""
                     defaultBG(itemView.gridItemMyGames)
                     itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.colorAppDisabled))
+                    itemView.textItemAppName.text = ""
                 }
                 else{
                     dbHandler.addData("app", hashMapOf("id" to data[0], "name" to data[1], "tag" to tag) )
@@ -153,6 +153,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                     itemView.switchAppsLauncher.isChecked = true
                     itemView.textItemAppName.setTextColor( fragment.requireContext().getColor(R.color.design_default_color_on_primary))
                     itemView.gridItemMyGames.setBackgroundColor(fragment.requireContext().getColor(R.color.colorConfigApp))
+                    setTags(arrayListOf(arrayListOf("","","", tag)))
                 }
             }
         }

@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.servoz.appsdisabler.tools.Db
 import com.servoz.appsdisabler.tools.RunCommand
+import kotlinx.android.synthetic.main.slide_fragment.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -42,8 +43,8 @@ class LauncherSlideFragment : Fragment() {
         val apps=checkUninstalledApps(tag, dbHandler)
         apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
         val columns=if (apps.count() in 1 until cols) apps.count() else cols
-        view.findViewById<GridLayout>(R.id.gridMyApps).removeAllViews()
-        view.findViewById<GridLayout>(R.id.gridMyApps).columnCount=columns
+        view.gridMyApps.removeAllViews()
+        view.gridMyApps.columnCount=columns
         val cellSize = (resources.displayMetrics.widthPixels-10.dp)/cols
         for((c, app) in apps.withIndex()){
             createAppView(view, tag, app, cellSize, objCmd, row, col, dbHandler, c)
@@ -142,8 +143,13 @@ class LauncherSlideFragment : Fragment() {
     private fun showAppMenu(view: View, objCmd: RunCommand, dbHandler:Db, app: ArrayList<String>, text:TextView) {
         val popup = PopupMenu(requireContext(), view)
         popup.inflate(R.menu.menu_app)
-        if(app[2]!="1")
-            popup.menu.findItem(R.id.menuAddApp).isVisible=false
+        if(app[2]!="1") {
+            popup.menu.findItem(R.id.menuAddApp).isVisible = false
+            popup.menu.findItem(R.id.menuRemoveAutoApp).isVisible=true
+        }else{
+            popup.menu.findItem(R.id.menuRemoveAutoApp).isVisible=false
+            popup.menu.findItem(R.id.menuAddApp).isVisible = true
+        }
         var hideMenu=true
         val menus= arrayListOf(R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9)
         for (i in 0 until 10){
@@ -188,8 +194,15 @@ class LauncherSlideFragment : Fragment() {
                 }
                 R.id.menuAddApp -> {
                     objCmd.disableApp(requireContext(),app)
-                    dbHandler.addData("app", hashMapOf("id" to app[0], "name" to app[1]))
+                    dbHandler.editData("app", "`id`='${app[0]}'", hashMapOf("launcher" to ""))
                     text.setTextColor(textColor2)
+                    requireActivity().recreate()
+                }
+                R.id.menuRemoveAutoApp -> {
+                    objCmd.disableApp(requireContext(),app)
+                    dbHandler.editData("app", "`id`='${app[0]}'", hashMapOf("launcher" to "1"))
+                    text.setTextColor(textColor)
+                    requireActivity().recreate()
                 }
                 R.id.menuEnableApp -> {
                     objCmd.enableApp(requireContext(), app)

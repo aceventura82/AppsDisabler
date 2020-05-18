@@ -200,6 +200,35 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:textSize="20sp"
+                 android:layout_margin="5dp"
+                android:text="@string/all" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_tabs_desc" />
+
+                <Switch
+                    android:id="@+id/switchAllTabB"
+                    android:paddingStart="20dp"
+                    android:layout_weight="1"
+                    android:paddingEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
+
+            </LinearLayout>
+
            <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
