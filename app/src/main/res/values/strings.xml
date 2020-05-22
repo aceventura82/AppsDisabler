@@ -76,7 +76,7 @@
     <string name="help_launcher5">Enable all applications marked to automatically disable/enable</string>
     <string name="help_launcher6">Disable all applications marked to automatically disable/enable</string>
     <string name="helps">Helps Windows</string>
-    <string name="labels_helps">Dsiplay all helps again</string>
+    <string name="labels_helps">Display all helps again</string>
     <string name="reset">Reset</string>
     <string name="help_reset">Helps View visible</string>
     <string name="remove_auto_app">Remove App from Auto Disable</string>
