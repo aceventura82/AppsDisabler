@@ -4,7 +4,15 @@ This application need ROOT to diable applications
 
 This is an Open Source version of IceBox App
 
-CHANGES:
+CHANGES Version 1.8:
+* Add Spanish Translation
+* Add Dutch Translation ( Thanks to @Vistaus)
+
+CHANGES Version 1.7:
+* Minor Fixes
+* Remove all button option
+
+CHANGES Version 1.6:
 * Added Slide to change tags
 * Added First Run Helps
 
