@@ -26,6 +26,9 @@ APK:
 WebSite:
 <a href="https://www.servoz.tk/app-disabler/" >App Website </a>
 
+<a href="https://f-droid.org/en/packages/com.servoz.appsdisabler/" target="_blank" rel="noopener noreferrer"><img src="https://www.servoz.tk/wp-content/uploads/2020/05/get-it-on.png" alt="f-droid" width="150"/></a><img alt="F-Droid" src="https://img.shields.io/f-droid/v/com.servoz.appsdisabler">
+
+
 
 Screenshots:
 <div>
