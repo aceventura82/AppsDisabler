@@ -1,17 +1,17 @@
 package com.servoz.appsdisabler
 
+import android.app.ActivityManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.animation.TranslateAnimation
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.PopupWindow
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.view.isVisible
@@ -55,6 +55,8 @@ class LauncherActivity : AppCompatActivity() {
         if(prefs!!.getString("LABELS","-1")=="-1")
             prefs!!.edit().putString("LABELS", "ON").apply()
 
+        if(prefs!!.getString("RECENT_APPS","")=="ON")
+            hideRecent()
         setTheme()
         setLauncherSize()
         setColors()
@@ -85,6 +87,14 @@ class LauncherActivity : AppCompatActivity() {
                 Thread.sleep(2000)
                 uiThread { showHelp() }
             }
+    }
+
+    private fun hideRecent(){
+        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val tasks = am.appTasks
+        if (tasks != null && tasks.size > 0) {
+            tasks[0].setExcludeFromRecents(true)
+        }
     }
 
     private fun setTheme(){

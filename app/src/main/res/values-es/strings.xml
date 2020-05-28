@@ -81,4 +81,6 @@
     <string name="help_reset">Mostrar ayudas</string>
     <string name="remove_auto_app">Quitar aplicación de auto habilitar/deshabilitar</string>
     <string name="all_tabs_desc">Mostrar el boton de todas las etiquetas</string>
+    <string name="hide_recent_apps">Ocultar en aplicaciones recientes</string>
+    <string name="hide_recent_apps_desc">No mostrar en las aplicaciones recientes de android</string>
 </resources>

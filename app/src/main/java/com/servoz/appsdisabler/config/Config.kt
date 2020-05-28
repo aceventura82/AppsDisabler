@@ -53,6 +53,7 @@ class Config:Fragment() {
         changeSwitch("LABELS",switchHideLabels)
         changeSwitch("SHOW_TABS",switchTabs)
         changeSwitch("SHOW_ALL_TABS_B",switchAllTabB)
+        changeSwitch("RECENT_APPS",switchRecentApps)
 
         setColor("TEXT", requireContext().getColor(R.color.design_default_color_on_primary), buttonTextColor)
         setColor("TEXT2", requireContext().getColor(R.color.colorAppDisabled), buttonDisTextColor)

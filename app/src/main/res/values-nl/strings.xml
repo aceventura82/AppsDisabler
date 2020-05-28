@@ -81,4 +81,6 @@
     <string name="help_reset">Hulpballonnen worden getoond</string>
     <string name="remove_auto_app">App verwijderen uit automatisch uitschakelen</string>
     <string name="all_tabs_desc">Toon een knop \'Alle tabbladen\' op de starter</string>
+    <string name="hide_recent_apps">Verbergen voor recente toepassingen</string>
+    <string name="hide_recent_apps_desc">Niet te zien in de Android-recente applicaties</string>
 </resources>

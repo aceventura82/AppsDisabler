@@ -81,4 +81,6 @@
     <string name="help_reset">Helps View visible</string>
     <string name="remove_auto_app">Remove App from Auto Disable</string>
     <string name="all_tabs_desc">Show All tabs button on launcher</string>
+    <string name="hide_recent_apps">Hide from recent apps</string>
+    <string name="hide_recent_apps_desc">Don\'t show in the android recent Apps</string>
 </resources>
