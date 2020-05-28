@@ -4,6 +4,9 @@ This application need ROOT to diable applications
 
 This is an Open Source version of IceBox App
 
+CHANGES Version 1.9:
+* Option to hide from Recent Apps
+
 CHANGES Version 1.8:
 * Add Spanish Translation
 * Add Dutch Translation ( Thanks to @Vistaus)
