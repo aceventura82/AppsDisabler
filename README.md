@@ -20,7 +20,7 @@ CHANGES Version 1.6:
 * Added First Run Helps
 
 
-APK:
+APK: Version 1.9
 <a href="../asserts/app_disabler_SIGNED.apk" >Download </a>
 
 WebSite:
