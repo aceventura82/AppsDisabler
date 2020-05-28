@@ -21,7 +21,7 @@ CHANGES Version 1.6:
 
 
 APK: Version 1.9
-<a href="../asserts/app_disabler_SIGNED.apk" >Download </a>
+<a href="https://github.com/aceventura82/AppsDisabler/blob/master/app/release/app-release.apk" >Download </a>
 
 WebSite:
 <a href="https://www.servoz.tk/app-disabler/" >App Website </a>
