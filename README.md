@@ -29,8 +29,8 @@ WebSite:
 
 Screenshots:
 <div>
-  <img src="../asserts/main.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
-  <img src="../asserts/settings.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
-  <img src="../asserts/apps.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
-  <img src="../asserts/colors.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
+  <img src="https://www.servoz.tk/wp-content/uploads/2020/04/settings-576x1024.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
+  <img src="https://www.servoz.tk/wp-content/uploads/2020/04/colors-576x1024.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
+  <img src="https://www.servoz.tk/wp-content/uploads/2020/04/apps-576x1024.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
+  <img src="https://www.servoz.tk/wp-content/uploads/2020/04/main-1-576x1024.png" width="200" height="400" style="margin:50px 50px 50px 50px" />
 </div>
