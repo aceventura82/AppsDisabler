@@ -1,10 +1,14 @@
 package com.servoz.appsdisabler
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -15,6 +19,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class LauncherSlideFragment : Fragment() {
     private var textColor=0
@@ -212,10 +217,30 @@ class LauncherSlideFragment : Fragment() {
                     objCmd.disableApp(requireContext(), app)
                     text.setTextColor(textColor2)
                 }
+                R.id.menuAppSettings -> {
+                    showInstalledAppDetails(requireContext(), app[0])
+                }
             }
             true
         }
         popup.show()
+    }
+
+    private fun showInstalledAppDetails(context: Context, packageName: String?) {
+        val intent = Intent()
+        val apiLevel = Build.VERSION.SDK_INT
+        if (apiLevel >= 9) { // above 2.3
+            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            val uri: Uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+        } else { // below 2.3
+            val appPkgName: String =
+                if (apiLevel == 8) "pkg" else "com.android.settings.ApplicationPkgName"
+            intent.action = Intent.ACTION_VIEW
+            intent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails")
+            intent.putExtra(appPkgName, packageName)
+        }
+        context.startActivity(intent)
     }
 
     companion object {

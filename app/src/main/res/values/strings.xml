@@ -71,7 +71,7 @@
     <string name="don_t_show_again">Don\'t show Again</string>
     <string name="help_launcher1">To View All Applications (When tabs activated)</string>
     <string name="help_launcher2">To Add a new tab (When tabs activated)</string>
-    <string name="help_launcher3">Applications settings</string>
+    <string name="help_launcher3">Application settings</string>
     <string name="help_launcher4">To modify the applications in launcher, or manually disable</string>
     <string name="help_launcher5">Enable all applications marked to automatically disable/enable</string>
     <string name="help_launcher6">Disable all applications marked to automatically disable/enable</string>
