@@ -128,8 +128,8 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                 else{
                     dbHandler.deleteById("app", data[0])
                     defaultBG(itemView.gridItemMyGames)
-                    itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.colorAppDisabled))
-                    itemView.textItemAppName.text = ""
+                    itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.design_default_color_on_primary))
+                    itemView.textItemAppName.text = data[1]
                 }
             }
         }
@@ -143,8 +143,8 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                     itemView.switchAppsLauncher.isChecked = false
                     itemView.textItemTags.text=""
                     defaultBG(itemView.gridItemMyGames)
-                    itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.colorAppDisabled))
-                    itemView.textItemAppName.text = ""
+                    itemView.textItemAppName.setTextColor(fragment.requireContext().getColor(R.color.design_default_color_on_primary))
+                    itemView.textItemAppName.text = data[1]
                 }
                 else{
                     dbHandler.addData("app", hashMapOf("id" to data[0], "name" to data[1], "tag" to tag) )
