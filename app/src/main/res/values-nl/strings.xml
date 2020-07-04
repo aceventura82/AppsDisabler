@@ -82,10 +82,12 @@
     <string name="remove_auto_app">App verwijderen uit automatisch uitschakelen</string>
     <string name="all_tabs_desc">Toon een knop \'Alle tabbladen\' op de starter</string>
     <string name="hide_recent_apps">Verbergen voor recente toepassingen</string>
-    <string name="hide_recent_apps_desc">Niet te zien in de Android-recente applicaties</string>
+    <string name="hide_recent_apps_desc">Niet te zien in de Android-recente toepassingen</string>
     <string name="disable_marked_app">Disable checked apps</string>
-    <string name="disable_app_in_tag">Disable all apps in Tag</string>
-    <string name="move_tag_right">Move Right</string>
-    <string name="gray_icons">Gray Icons</string>
-    <string name="gray_icons_desc">Gray Icons for disabled apps</string>
+    <string name="disable_app_in_tag">Inschakelen alle apps in Tag uit</string>
+    <string name="enable_app_in_tag">Uitschakelen alle apps in Tag in</string>
+    <string name="move_tag_right">Ga naar rechts</string>
+    <string name="move_tag_left">Ga naar links</string>
+    <string name="gray_icons">Grijze pictogrammen</string>
+    <string name="gray_icons_desc">Grijze pictogrammen voor uitgeschakelde toepassingen</string>
 </resources>

@@ -84,8 +84,10 @@
     <string name="hide_recent_apps">Ocultar en aplicaciones recientes</string>
     <string name="hide_recent_apps_desc">No mostrar en las aplicaciones recientes de android</string>
     <string name="disable_marked_app">Disable checked apps</string>
-    <string name="disable_app_in_tag">Disable all apps in Tag</string>
-    <string name="move_tag_right">Move Right</string>
-    <string name="gray_icons">Gray Icons</string>
-    <string name="gray_icons_desc">Gray Icons for disabled apps</string>
+    <string name="disable_app_in_tag">Deshabilitar todas las apps en la etiqueta</string>
+    <string name="enable_app_in_tag">Habilitar todas las apps en la etiqueta</string>
+    <string name="move_tag_right">Mover a la derecha</string>
+    <string name="move_tag_left">Mover a la Izquierda</string>
+    <string name="gray_icons">Iconos grises</string>
+    <string name="gray_icons_desc">Iconos grises para aplicaciones deshabilitadas</string>
 </resources>
