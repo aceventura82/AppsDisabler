@@ -83,4 +83,9 @@
     <string name="all_tabs_desc">Toon een knop \'Alle tabbladen\' op de starter</string>
     <string name="hide_recent_apps">Verbergen voor recente toepassingen</string>
     <string name="hide_recent_apps_desc">Niet te zien in de Android-recente applicaties</string>
+    <string name="disable_marked_app">Disable checked apps</string>
+    <string name="disable_app_in_tag">Disable all apps in Tag</string>
+    <string name="move_tag_right">Move Right</string>
+    <string name="gray_icons">Gray Icons</string>
+    <string name="gray_icons_desc">Gray Icons for disabled apps</string>
 </resources>

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -54,6 +56,8 @@ class LauncherActivity : AppCompatActivity() {
         val objCmd= RunCommand()
         if(prefs!!.getString("LABELS","-1")=="-1")
             prefs!!.edit().putString("LABELS", "ON").apply()
+        if(prefs!!.getString("TAGS_ORDER","-1")=="-1")
+            prefs!!.edit().putString("TAGS_ORDER", "0|1|2|3|4|5|6|7|8|9").apply()
 
         if(prefs!!.getString("RECENT_APPS","")=="ON")
             hideRecent()
@@ -63,13 +67,14 @@ class LauncherActivity : AppCompatActivity() {
         mainMyAppsLayout.setOnClickListener { finish() }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
         val tagsPagesNames=ArrayList<String>()
-        for (i in 0 until 10)
-            tagsPagesNames.add(prefs!!.getString("TAG_$i","")!!)
+        for (i in prefs!!.getString("TAGS_ORDER","")!!.split("|")) {
+            tagsPagesNames.add(prefs!!.getString("TAG_$i", "")!!)
+        }
         tabsPages.add(TagView("", prefs!!.getInt("my_apps_columns",6), textColor, textColor2,"",
-            prefs!!.getString("LABELS","")!!, tagsPagesNames))
+            prefs!!.getString("LABELS","")!!, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!))
         if(prefs!!.getString("SHOW_TABS","")=="ON"){
-            createTagsViews(tagsPagesNames)
             newTab()
+            createTagsViews(tagsPagesNames)
         }else{
             linearLayoutTags.isVisible=false
             currentTag=""
@@ -145,13 +150,13 @@ class LauncherActivity : AppCompatActivity() {
     private fun createTagsViews(tagsPagesNames:ArrayList<String>){
         val cols=prefs!!.getInt("my_apps_columns",6)
         val labels=prefs!!.getString("LABELS","")!!
-        for (i in 0 until 10){
+        for (i in prefs!!.getString("TAGS_ORDER","")!!.split("|")){
             val tt=prefs!!.getString("TAG_$i","")!!
             if(tt!="") {
                 tabsPages.add(
                     TagView(
                         "TAG_$i", cols, textColor, textColor2,
-                        prefs!!.getString("TAG_$i", "")!!, labels, tagsPagesNames
+                        prefs!!.getString("TAG_$i", "")!!, labels, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!
                     )
                 )
             }
@@ -252,18 +257,20 @@ class LauncherActivity : AppCompatActivity() {
             0f)
     }
 
-    private fun changeAll(objCmd:RunCommand, enable:Boolean=false,tag:String=""){
+    private fun changeAll(objCmd:RunCommand, enable:Boolean=false,tag:String="", all:Boolean=false){
         val dbHandler = Db(this, null)
         val apps=dbHandler.getData("app", if(tag!="")"`tag` like '%|$tag|%'" else "")
         apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
         for((c,app) in apps.withIndex()){
-            if(app[2] == "1")
+            if(app[2] == "1" && !all)
                 continue
             objCmd.sudoForResult("pm ${if (enable) "enable" else "disable" } ${app[0]}")
             try {
                 findViewById<TextView>(c).setTextColor(if (enable) textColor else textColor2)
+
             }catch (ex:NullPointerException){}
         }
+        recreate()
     }
 
     private fun showConfigMenu(objCmd: RunCommand) {
@@ -333,6 +340,7 @@ class LauncherActivity : AppCompatActivity() {
         popupConfig.setOnMenuItemClickListener{ item: MenuItem? ->
             when (item!!.itemId) {
                 R.id.menuTagRename -> {
+                    popupConfig.dismiss()
                     showTagName(textViewAddTab,Integer.parseInt(tagId.replace("TAG_","")),true)
                 }
                 R.id.menuTagDelete -> {
@@ -344,17 +352,58 @@ class LauncherActivity : AppCompatActivity() {
                     prefs!!.edit().remove(tagId).apply()
                     prefs!!.edit().putString("CURRENT_TAG", "").apply()
                     Toast.makeText(this, tagId, Toast.LENGTH_SHORT).show()
+                    popupConfig.dismiss()
                     val intent = Intent(this, LauncherActivity::class.java)
                     finish()
                     startActivity(intent)
                 }
                 R.id.menuTagDisable -> {
-                    changeAll(objCmd, tag=tagId)
+                    popupConfig.dismiss()
+                    changeAll(objCmd, tag=tagId, all = true)
+                }
+                R.id.menuTagEnable -> {
+                    popupConfig.dismiss()
+                    changeAll(objCmd, true, tagId, true)
+                }
+                R.id.menuTagLeft -> {
+                    popupConfig.dismiss()
+                    moveTag(tagId)
+                }
+                R.id.menuTagRight -> {
+                    popupConfig.dismiss()
+                    moveTag(tagId, true)
                 }
             }
             true
         }
         popupConfig.show()
+    }
+
+    private fun moveTag(tag:String, right:Boolean=false){
+        val tagOrder= prefs!!.getString("TAGS_ORDER","")!!.split("|").toMutableList()
+        val t = tag.replace("TAG_", "")
+        for((c, tt) in tagOrder.withIndex())
+            if (tt == t && !right)
+                if (c == 0)
+                    return
+                else {
+                    val auxT = tagOrder[c - 1]
+                    tagOrder[c - 1] = tt
+                    tagOrder[c] = auxT
+                    break
+                }
+            else if(tt == t && right)
+                if (prefs!!.getString("TAG_${(c+1)}","")!! == "")
+                    return
+                else {
+                    val auxT = tagOrder[c + 1]
+                    tagOrder[c + 1] = tt
+                    tagOrder[c] = auxT
+                    break
+                }
+
+        prefs!!.edit().putString("TAGS_ORDER", tagOrder.joinToString("|")).apply()
+        recreate()
     }
 
     private fun showHelp(){

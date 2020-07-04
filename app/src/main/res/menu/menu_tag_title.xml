@@ -8,5 +8,14 @@
     android:title="@string/delete" />
 <item
     android:id="@+id/menuTagDisable"
-    android:title="@string/disable_app" />
+    android:title="@string/disable_app_in_tag" />
+<item
+    android:id="@+id/menuTagEnable"
+    android:title="@string/enable_app_in_tag" />
+<item
+    android:id="@+id/menuTagLeft"
+    android:title="@string/move_tag_left" />
+<item
+    android:id="@+id/menuTagRight"
+    android:title="@string/move_tag_right" />
 </menu>

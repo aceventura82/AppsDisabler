@@ -3,6 +3,8 @@ package com.servoz.appsdisabler
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.net.Uri
@@ -26,6 +28,7 @@ class LauncherSlideFragment : Fragment() {
     private var textColor2=0
     private var labels=""
     private var tags=ArrayList<String>()
+    private var grayIcons=false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState:
         Bundle?): View? {
@@ -36,6 +39,7 @@ class LauncherSlideFragment : Fragment() {
         textColor2 = requireArguments().getInt("color2")
         labels = requireArguments().getString("labels")!!
         tags= requireArguments().getStringArrayList("tags") as ArrayList<String>
+        grayIcons = requireArguments().getString("grayIcons")!! == "ON"
         getApps(view, requireArguments().getInt("cols"),tag)
         return view
     }
@@ -110,6 +114,8 @@ class LauncherSlideFragment : Fragment() {
                 text.setTypeface(null, Typeface.BOLD)
                 text.setPadding(0,0,0,0)
             }
+            if(grayIcons && !requireActivity().packageManager.getApplicationInfo(app[0], 0).enabled)
+                setGrayApp(img)
             ll.addView(img)
             ll.addView(text)
             ll.gravity=Gravity.CENTER
@@ -212,10 +218,12 @@ class LauncherSlideFragment : Fragment() {
                 R.id.menuEnableApp -> {
                     objCmd.enableApp(requireContext(), app)
                     text.setTextColor(textColor)
+                    requireActivity().recreate()
                 }
                 R.id.menuDisableApp -> {
                     objCmd.disableApp(requireContext(), app)
                     text.setTextColor(textColor2)
+                    requireActivity().recreate()
                 }
                 R.id.menuAppSettings -> {
                     showInstalledAppDetails(requireContext(), app[0])
@@ -243,6 +251,14 @@ class LauncherSlideFragment : Fragment() {
         context.startActivity(intent)
     }
 
+    private fun setGrayApp(v: ImageView) {
+        val matrix = ColorMatrix()
+        matrix.setSaturation(0f) //0 means grayscale
+        val cf = ColorMatrixColorFilter(matrix)
+        v.colorFilter = cf
+        v.imageAlpha = 128 // 128 = 0.5
+    }
+
     companion object {
         fun newInstance(apps:TagView): LauncherSlideFragment {
             val args = Bundle()
@@ -252,6 +268,7 @@ class LauncherSlideFragment : Fragment() {
             args.putInt("color2", apps.color2)
             args.putString("labels", apps.labels)
             args.putStringArrayList("tags", apps.tags)
+            args.putString("grayIcons", apps.grayIcons)
             val fragment = LauncherSlideFragment()
             fragment.arguments = args
             return fragment
