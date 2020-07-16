@@ -14,7 +14,6 @@ class MyBroadCastReceiver : BroadcastReceiver() {
     private var processId=0
     override fun onReceive(context: Context?, intent: Intent) {
         val timeout=(context!!.getSharedPreferences("com.servoz.appsdisabler.prefs", 0).getString("SCREEN_TIMEOUT", "-1")!!).toLong()
-        println("IN $timeout")
         if(timeout==-1L)
             return
         if (intent.action == Intent.ACTION_SCREEN_OFF) {
