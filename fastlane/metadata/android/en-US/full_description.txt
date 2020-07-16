@@ -2,6 +2,24 @@ Disable/Enable Any application using a easy access launcher. This application ne
 
 This is an Open Source version of IceBox App
 
+Features:
+
+* Add any applications( System or user)
+
+* create tabs to order your applications (mutlples tabs allowed)
+
+* Disable/Enable any application
+
+* Global buttom to enable/disable applications
+
+* Auto disable when screen off
+
+* Change Icons Sizes
+
+* … More
+
 Source Code : https://github.com/aceventura82/AppsDisabler
 
 Website: https://www.servoz.tk/app-disabler/
+
+XDA Thread: https://forum.xda-developers.com/android/apps-games/app-disabler-app-to-easily-disable-app-t4121581
