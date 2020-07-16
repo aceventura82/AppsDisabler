@@ -62,6 +62,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
             setColors(fragment, data, appData)
             disableClick(fragment, data, objCmd)
             launcherClick(fragment, dbHandler, data, tag)
+            itemView.textItemAppName.maxWidth=itemView.textItemAppName.width
             gridClick(fragment, dbHandler, data, objCmd, tag)
             gridLongClick(fragment.requireContext(), itemView.textItemAppName, objCmd, dbHandler, data)
         }

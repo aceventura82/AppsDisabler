@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".LauncherActivity"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
             <intent-filter>
@@ -19,6 +20,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".AppsActivity"/>
+
+        <receiver android:name=".MyBroadCastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+            </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>

@@ -5,4 +5,5 @@
     <color name="colorIcons">#9E9E9E</color>
     <color name="colorConfigApp">#847D7D</color>
     <color name="colorBG">#FFFFFF</color>
+    <color name="colorText">#000000</color>
 </resources>

@@ -50,13 +50,14 @@ class LauncherSlideFragment : Fragment() {
         var col=0
         var row=0
         val apps=checkUninstalledApps(tag, dbHandler)
+        val prefs = requireActivity().getSharedPreferences("com.servoz.appsdisabler.prefs", 0)
         apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
         val columns=if (apps.count() in 1 until cols) apps.count() else cols
         view.gridMyApps.removeAllViews()
         view.gridMyApps.columnCount=columns
         val cellSize = (resources.displayMetrics.widthPixels-10.dp)/cols
         for((c, app) in apps.withIndex()){
-            createAppView(view, tag, app, cellSize, objCmd, row, col, dbHandler, c)
+            createAppView(view, tag, app, cellSize, objCmd, row, col, dbHandler, c, prefs.getInt("ICONS_SIZE", 40))
             col++
             if(col >0 && col.rem(columns)==0){
                 col=0
@@ -80,7 +81,7 @@ class LauncherSlideFragment : Fragment() {
         return if(valDel)dbHandler.getData("app", if(tag!="")"`tag`like'%|$tag|%'" else "") else appsVal
     }
 
-    private fun createAppView(view: View, tag:String, app: ArrayList<String>, cellSize: Int, objCmd: RunCommand, row:Int, col:Int, dbHandler: Db, c:Int){
+    private fun createAppView(view: View, tag:String, app: ArrayList<String>, cellSize: Int, objCmd: RunCommand, row:Int, col:Int, dbHandler: Db, c:Int, imgSize:Int){
         doAsync {
             val ll = LinearLayout(requireContext())
             ll.layoutParams = LinearLayout.LayoutParams(
@@ -91,8 +92,8 @@ class LauncherSlideFragment : Fragment() {
 
             val img = ImageView(requireContext())
             img.setImageDrawable(requireActivity().packageManager.getApplicationIcon(app[0]))
-            val imgSize=if(cellSize>80) 80 else cellSize
-            img.layoutParams=LinearLayout.LayoutParams(imgSize, imgSize).apply {
+            val iconSize=if(imgSize==10) cellSize-(cellSize.div(5)) else imgSize
+            img.layoutParams=LinearLayout.LayoutParams(iconSize, iconSize).apply {
                 setMargins(0,10,0,10)
             }
             img.setPadding(0,0,0,0)

@@ -2,11 +2,10 @@ package com.servoz.appsdisabler
 
 import android.app.ActivityManager
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -47,6 +46,7 @@ class LauncherActivity : AppCompatActivity() {
     private var baseColor=0
     private var alpha=50
     private lateinit var mPager: ViewPager
+    private val mScreenStateReceiver=MyBroadCastReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +61,16 @@ class LauncherActivity : AppCompatActivity() {
 
         if(prefs!!.getString("RECENT_APPS","")=="ON")
             hideRecent()
+
         setTheme()
         setLauncherSize()
         setColors()
-        mainMyAppsLayout.setOnClickListener { finish() }
+        mainMyAppsLayout.setOnClickListener {
+            val startMain = Intent(Intent.ACTION_MAIN)
+            startMain.addCategory(Intent.CATEGORY_HOME)
+            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(startMain)
+        }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
         val tagsPagesNames=ArrayList<String>()
         for (i in prefs!!.getString("TAGS_ORDER","")!!.split("|")) {
@@ -92,6 +98,16 @@ class LauncherActivity : AppCompatActivity() {
                 Thread.sleep(2000)
                 uiThread { showHelp() }
             }
+        val screenStateFilter = IntentFilter()
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
+        registerReceiver(mScreenStateReceiver, screenStateFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(mScreenStateReceiver!=null)
+            unregisterReceiver(mScreenStateReceiver)
     }
 
     private fun hideRecent(){
@@ -267,7 +283,6 @@ class LauncherActivity : AppCompatActivity() {
             objCmd.sudoForResult("pm ${if (enable) "enable" else "disable" } ${app[0]}")
             try {
                 findViewById<TextView>(c).setTextColor(if (enable) textColor else textColor2)
-
             }catch (ex:NullPointerException){}
         }
         recreate()

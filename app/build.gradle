@@ -63,4 +63,5 @@ dependencies {
     implementation 'org.apache.commons:commons-io:1.3.2'
 
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+    implementation'com.github.tiper:MaterialSpinner:1.4.1'
 }

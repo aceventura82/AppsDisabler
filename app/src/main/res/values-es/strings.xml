@@ -44,8 +44,6 @@
     <string name="background">Fondo</string>
     <string name="transparency">Transparencia</string>
     <string name="color">Color</string>
-    <string name="disable_app_text">Texto aplicación deshabilitada</string>
-    <string name="enable_app_text">Texto aplicación Habilitada</string>
     <string name="system_apps">Aplicaciones del sistema</string>
     <string name="theme_desc">define el tema claro u oscuro</string>
     <string name="columns_desc">define el número de columnas para el lanzador</string>
@@ -67,7 +65,7 @@
     <string name="text_append_tag">%1$s %2$s</string>
     <string name="help_apps1">Deshabilitar: Habilita o deshabilita una aplicación</string>
     <string name="help_apps2">Lanzador: Mostrar u ocultar aplicacines en el lanzador</string>
-    <string name="help_apps3">tclic en el nombre de la aplicación: habilita/deshabilita, agrega al lanzador y configura para auto habilitar/deshabilitar con el boton del lanzador(Habilitar/deshabilitar todos)</string>
+    <string name="help_apps3">clic en el nombre de la aplicación: habilita/deshabilita, agrega al lanzador y configura para auto habilitar/deshabilitar con el boton del lanzador(Habilitar/deshabilitar todos)</string>
     <string name="don_t_show_again">No volver a mostrar</string>
     <string name="help_launcher1">Para ver todas las aplicaciones (cuando están activadas las etiquetas)</string>
     <string name="help_launcher2">Para agregar una nueva etiqueta (cuando están activadas las etiquetas)</string>
@@ -75,19 +73,20 @@
     <string name="help_launcher4">Para modificar las aplicaciones en el lanzador, or deshabilitar manualmente</string>
     <string name="help_launcher5">Habilita todas las  aplicaciones marcadas para auto habilitar/deshabilitar</string>
     <string name="help_launcher6">Deshabilita todas las  aplicaciones marcadas para auto habilitar/deshabilitar</string>
-    <string name="helps">Ventanas de ayuda</string>
     <string name="labels_helps">Mostrar todas las ayudas de nuevo</string>
     <string name="reset">Limpiar</string>
     <string name="help_reset">Mostrar ayudas</string>
     <string name="remove_auto_app">Quitar aplicación de auto habilitar/deshabilitar</string>
     <string name="all_tabs_desc">Mostrar el boton de todas las etiquetas</string>
-    <string name="hide_recent_apps">Ocultar en aplicaciones recientes</string>
     <string name="hide_recent_apps_desc">No mostrar en las aplicaciones recientes de android</string>
-    <string name="disable_marked_app">Disable checked apps</string>
+    <string name="disable_marked_app">DDeshabilitar aplicaciones marcadas</string>
     <string name="disable_app_in_tag">Deshabilitar todas las apps en la etiqueta</string>
     <string name="enable_app_in_tag">Habilitar todas las apps en la etiqueta</string>
     <string name="move_tag_right">Mover a la derecha</string>
     <string name="move_tag_left">Mover a la Izquierda</string>
     <string name="gray_icons">Iconos grises</string>
     <string name="gray_icons_desc">Iconos grises para aplicaciones deshabilitadas</string>
+    <string name="icons_size_desc">Define el tamaño de los iconos</string>
+    <string name="auto">Auto</string>
+    <string name="timeout_desc">Minutos para desactivar apps después de apagada la pantalla</string>
 </resources>

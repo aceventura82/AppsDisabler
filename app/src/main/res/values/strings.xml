@@ -44,8 +44,6 @@
     <string name="background">Background</string>
     <string name="transparency">Transparency</string>
     <string name="color">Color</string>
-    <string name="disable_app_text">Text Disabled App</string>
-    <string name="enable_app_text">Text Enabled App</string>
     <string name="system_apps">System Apps</string>
     <string name="theme_desc">Set dark or light theme</string>
     <string name="columns_desc">Set the number of columns for the launcher</string>
@@ -75,13 +73,11 @@
     <string name="help_launcher4">To modify the applications in launcher, or manually disable</string>
     <string name="help_launcher5">Enable all applications marked to automatically disable/enable</string>
     <string name="help_launcher6">Disable all applications marked to automatically disable/enable</string>
-    <string name="helps">Helps Windows</string>
     <string name="labels_helps">Display all helps again</string>
     <string name="reset">Reset</string>
     <string name="help_reset">Helps View visible</string>
     <string name="remove_auto_app">Remove App from Auto Disable</string>
     <string name="all_tabs_desc">Show All tabs button on launcher</string>
-    <string name="hide_recent_apps">Hide from recent apps</string>
     <string name="hide_recent_apps_desc">Don\'t show in the android recent Apps</string>
     <string name="disable_marked_app">Disable checked apps</string>
     <string name="disable_app_in_tag">Disable all apps in Tag</string>
@@ -90,4 +86,7 @@
     <string name="move_tag_left">Move Left</string>
     <string name="gray_icons">Gray Icons</string>
     <string name="gray_icons_desc">Gray Icons for disabled apps</string>
+    <string name="icons_size_desc">Set the icons size</string>
+    <string name="auto">Auto</string>
+    <string name="timeout_desc">Minutes to auto disable apps after screen off</string>
 </resources>

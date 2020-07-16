@@ -44,8 +44,6 @@
     <string name="background">Achtergrond</string>
     <string name="transparency">Doorzichtigheid</string>
     <string name="color">Kleur</string>
-    <string name="disable_app_text">Tekst van uitgeschakelde app</string>
-    <string name="enable_app_text">Tekst van ingeschakelde app</string>
     <string name="system_apps">Systeemapps</string>
     <string name="theme_desc">Stel een donker of licht thema in</string>
     <string name="columns_desc">Stel het aantal kolommen op de starter in</string>
@@ -75,13 +73,11 @@
     <string name="help_launcher4">Om apps op de starter te bewerken of handmatig uit te schakelen</string>
     <string name="help_launcher5">Schakel alle als automatisch gemarkeerde apps in</string>
     <string name="help_launcher6">Schakel alle als automatisch gemarkeerde apps uit</string>
-    <string name="helps">Hulpballonnen</string>
     <string name="labels_helps">Alle hulpballonnen weer tonen</string>
     <string name="reset">Standaardwaarden</string>
     <string name="help_reset">Hulpballonnen worden getoond</string>
     <string name="remove_auto_app">App verwijderen uit automatisch uitschakelen</string>
     <string name="all_tabs_desc">Toon een knop \'Alle tabbladen\' op de starter</string>
-    <string name="hide_recent_apps">Verbergen voor recente toepassingen</string>
     <string name="hide_recent_apps_desc">Niet te zien in de Android-recente toepassingen</string>
     <string name="disable_marked_app">Disable checked apps</string>
     <string name="disable_app_in_tag">Inschakelen alle apps in Tag uit</string>
@@ -90,4 +86,7 @@
     <string name="move_tag_left">Ga naar links</string>
     <string name="gray_icons">Grijze pictogrammen</string>
     <string name="gray_icons_desc">Grijze pictogrammen voor uitgeschakelde toepassingen</string>
+    <string name="icons_size_desc">Set the icons size</string>
+    <string name="auto">Auto</string>
+    <string name="timeout_desc">Minutes to auto disable apps after screen off</string>
 </resources>

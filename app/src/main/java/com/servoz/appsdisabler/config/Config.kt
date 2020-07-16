@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Switch
 import android.widget.Toast
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import com.servoz.appsdisabler.LauncherActivity
 import com.servoz.appsdisabler.R
+import com.tiper.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_config.*
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
@@ -49,6 +51,7 @@ class Config:Fragment() {
         theme()
         columns()
         launcherHeight()
+        iconsSize()
         changeSwitch("SYSTEM",switchSysApps)
         changeSwitch("LABELS",switchHideLabels)
         changeSwitch("SHOW_TABS",switchTabs)
@@ -63,6 +66,7 @@ class Config:Fragment() {
 
         backgroundColors()
         resetHelps()
+        spinner()
     }
 
     private fun theme(){
@@ -131,6 +135,29 @@ class Config:Fragment() {
         })
     }
 
+    private fun iconsSize(){
+        var value=prefs!!.getInt("ICONS_SIZE",0)
+        IconSize.progress= value
+        if(value.toString() == "10")
+            textViewIconSize.text =getString(R.string.auto)
+        else
+            textViewIconSize.text=value.toString()
+
+        IconSize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                value= progress
+                if(value.toString() == "10")
+                    textViewIconSize.text =getString(R.string.auto)
+                else
+                    textViewIconSize.text =progress.toString()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                prefs!!.edit().putInt("ICONS_SIZE", value).apply()
+            }
+        })
+    }
+
     private fun backgroundColors(){
         setColor("BG", requireContext().getColor(R.color.design_default_color_primary), buttonBgColor)
         var cAlpha=prefs!!.getInt("ALPHA",50)
@@ -179,6 +206,29 @@ class Config:Fragment() {
             prefs!!.edit().putString("HELP_APPS", "").apply()
             prefs!!.edit().putString("HELP_LAUNCHER", "").apply()
             Toast.makeText(requireContext(), getString(R.string.help_reset), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun spinner(){
+        //Gender spinner
+        val titles= arrayListOf(getString(R.string.disabled), "0", "1" ,"5", "10", "30", "60")
+        val values= arrayListOf("-1", "0", "1" ,"5", "10", "30", "60")
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, titles)
+        screen_timeout.adapter = arrayAdapter
+        screen_timeout.selection=when(prefs!!.getString("SCREEN_TIMEOUT","")) {
+            "-1" -> 0
+            "0" -> 1
+            "1" -> 2
+            "5" -> 3
+            "10" -> 4
+            "30" -> 5
+            else -> 6
+        }
+        screen_timeout.onItemSelectedListener = object : MaterialSpinner.OnItemSelectedListener {
+            override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
+                prefs!!.edit().putString("SCREEN_TIMEOUT", values[position]).apply()
+            }
+            override fun onNothingSelected(parent: MaterialSpinner) {}
         }
     }
 
