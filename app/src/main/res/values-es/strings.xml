@@ -90,4 +90,6 @@
     <string name="auto">Auto</string>
     <string name="timeout_desc">Minutos para desactivar apps después de apagada la pantalla</string>
     <string name="apps_disabled">%1$s Applicaciones deshabilitadas cuando se apago la pantalla</string>
+    <string name="no_apps_to_disable">No hay aplicaciones para deshabilitar</string>
+    <string name="n_apps">%1$s Applicaciones %2$s</string>
 </resources>

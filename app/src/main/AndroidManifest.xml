@@ -10,8 +10,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".DisableAllWidget" android:label="@string/disableAll">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
-        <activity android:name=".LauncherActivity"
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/disable_all_widget_info" />
+        </receiver>
+
+        <receiver android:name=".EnableAllWidget" android:label="@string/enableAllApp">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/disable_all_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".LauncherActivity"
+            android:launchMode= "singleInstance"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,20 +40,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AppsActivity"/>
+        <activity android:name=".AppsActivity" />
+        <activity android:name=".WidgetAniActivity" android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
 
         <receiver android:name=".MyBroadCastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.SCREEN_OFF"/>
-                <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
     </application>
-
 
 </manifest>

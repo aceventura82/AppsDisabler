@@ -90,4 +90,6 @@
     <string name="auto">Auto</string>
     <string name="timeout_desc">Minutes to auto disable apps after screen off</string>
     <string name="apps_disabled">%1$s Applications disabled when Screen off</string>
+    <string name="no_apps_to_disable">No applications to disable</string>
+    <string name="n_apps">%1$s Applications %2$s</string>
 </resources>

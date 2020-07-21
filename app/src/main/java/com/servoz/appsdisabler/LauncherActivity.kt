@@ -9,12 +9,15 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +33,7 @@ import kotlinx.android.synthetic.main.slide_fragment.*
 import kotlinx.android.synthetic.main.tag_name.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.lang.Thread.sleep
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -107,7 +111,7 @@ class LauncherActivity : AppCompatActivity() {
         setInitialTab()
         if(prefs!!.getString("HELP_LAUNCHER","")=="")
             doAsync {
-                Thread.sleep(2000)
+                sleep(2000)
                 uiThread { showHelp() }
             }
         val screenStateFilter = IntentFilter()
@@ -116,6 +120,8 @@ class LauncherActivity : AppCompatActivity() {
         registerReceiver(mScreenStateReceiver, screenStateFilter)
         notificationChannels()
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -127,7 +133,9 @@ class LauncherActivity : AppCompatActivity() {
         super.onResume()
         if(prefs!!.getString("RECREATE", "")=="YES"){
             prefs!!.edit().putString("RECREATE", "").apply()
-            recreate()
+            val intent = Intent(this, LauncherActivity::class.java)
+            finish()
+            startActivity(intent)
         }
     }
 
@@ -475,4 +483,5 @@ class LauncherActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(mChannelMuted)
         }
     }
+
 }
