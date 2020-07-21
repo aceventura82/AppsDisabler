@@ -1,11 +1,15 @@
 package com.servoz.appsdisabler
 
 import android.app.ActivityManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -28,6 +32,14 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 import kotlin.collections.ArrayList
+
+/*
+ROAD MAP:
+-Widget/Shortcut to "defrost" all apps enable all apps in click so that we can update them (playstore updates)
+-Widget/Shortcut to freeze/disable all apps so that I can disable all the apps that I had selected in the disabler app.
+-Fingerprint authentication to do the above activities would be great.
+
+ */
 
 
 val Int.dp: Int
@@ -102,12 +114,21 @@ class LauncherActivity : AppCompatActivity() {
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
         registerReceiver(mScreenStateReceiver, screenStateFilter)
+        notificationChannels()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if(mScreenStateReceiver!=null)
             unregisterReceiver(mScreenStateReceiver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(prefs!!.getString("RECREATE", "")=="YES"){
+            prefs!!.edit().putString("RECREATE", "").apply()
+            recreate()
+        }
     }
 
     private fun hideRecent(){
@@ -267,9 +288,9 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun setLauncherSize(){
         val cellSize = (resources.displayMetrics.heightPixels-25.dp)/10
-        val h= prefs!!.getInt("HEIGHT",5)*cellSize
+        val h= prefs!!.getInt("HEIGHT",5)*cellSize+50.dp
         linearLayoutMain.layoutParams= LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-            if(h>resources.displayMetrics.heightPixels)resources.displayMetrics.heightPixels else h,
+            if(h>resources.displayMetrics.heightPixels)resources.displayMetrics.heightPixels-25.dp else h,
             0f)
     }
 
@@ -437,6 +458,21 @@ class LauncherActivity : AppCompatActivity() {
                 prefs!!.edit().putString("HELP_LAUNCHER", "OFF").apply()
             else
                 prefs!!.edit().putString("HELP_LAUNCHER", "").apply()
+        }
+    }
+
+    private fun notificationChannels(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val mChannel = NotificationChannel("MAIN", "Default", NotificationManager.IMPORTANCE_DEFAULT)
+            mChannel.description = "For main Notifications"
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+
+            val mChannelMuted = NotificationChannel("SILENT", "Silent", NotificationManager.IMPORTANCE_DEFAULT)
+            mChannelMuted.description = "Screen Off notifications"
+            mChannelMuted.setSound(null,null)
+            notificationManager.createNotificationChannel(mChannelMuted)
         }
     }
 }

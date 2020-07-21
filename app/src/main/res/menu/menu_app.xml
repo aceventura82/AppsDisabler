@@ -13,11 +13,11 @@
     android:id="@+id/menuEnableApp"
     android:title="@string/enable_app" />
 <item
-    android:id="@+id/menuAppSettings"
-    android:title="@string/help_launcher3" />
-<item
     android:id="@+id/menuDisableApp"
     android:title="@string/disable_app" />
+<item
+    android:id="@+id/menuAppSettings"
+    android:title="@string/help_launcher3" />
 <item
     android:id="@+id/menuTag"
     android:title="@string/tag" >

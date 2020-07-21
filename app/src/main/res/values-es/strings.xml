@@ -89,4 +89,5 @@
     <string name="icons_size_desc">Define el tamaño de los iconos</string>
     <string name="auto">Auto</string>
     <string name="timeout_desc">Minutos para desactivar apps después de apagada la pantalla</string>
+    <string name="apps_disabled">%1$s Applicaciones deshabilitadas cuando se apago la pantalla</string>
 </resources>

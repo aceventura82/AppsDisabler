@@ -162,6 +162,13 @@ class LauncherSlideFragment : Fragment() {
             popup.menu.findItem(R.id.menuRemoveAutoApp).isVisible=false
             popup.menu.findItem(R.id.menuAddApp).isVisible = true
         }
+        popup.menu.findItem(R.id.menuEnableApp).isVisible=false
+        popup.menu.findItem(R.id.menuDisableApp).isVisible=false
+        if(grayIcons && !requireActivity().packageManager.getApplicationInfo(app[0], 0).enabled)
+            popup.menu.findItem(R.id.menuEnableApp).isVisible=true
+        else
+            popup.menu.findItem(R.id.menuDisableApp).isVisible=true
+
         var hideMenu=true
         val menus= arrayListOf(R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9)
         for (i in 0 until 10){

@@ -211,18 +211,15 @@ class Config:Fragment() {
 
     private fun spinner(){
         //Gender spinner
-        val titles= arrayListOf(getString(R.string.disabled), "0", "1" ,"5", "10", "30", "60")
-        val values= arrayListOf("-1", "0", "1" ,"5", "10", "30", "60")
+        val titles= arrayListOf(getString(R.string.disabled), "0", "1" ,"5")
+        val values= arrayListOf("-1", "0", "1" ,"5")
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, titles)
         screen_timeout.adapter = arrayAdapter
         screen_timeout.selection=when(prefs!!.getString("SCREEN_TIMEOUT","")) {
             "-1" -> 0
             "0" -> 1
             "1" -> 2
-            "5" -> 3
-            "10" -> 4
-            "30" -> 5
-            else -> 6
+            else -> 3
         }
         screen_timeout.onItemSelectedListener = object : MaterialSpinner.OnItemSelectedListener {
             override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
