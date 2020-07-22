@@ -9,15 +9,12 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -121,7 +118,12 @@ class LauncherActivity : AppCompatActivity() {
         notificationChannels()
     }
 
-
+    override fun onBackPressed() {
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startMain)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
