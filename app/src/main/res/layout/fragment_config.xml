@@ -101,7 +101,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:min="1"
                     android:max="10" />
             </LinearLayout>
 
@@ -131,7 +130,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:min="1"
                     android:max="10" />
 
             </LinearLayout>
@@ -260,10 +258,9 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/timeout_desc" />
 
-                <com.tiper.MaterialSpinner
+                <Spinner
                     android:layout_margin="5dp"
                     android:id="@+id/screen_timeout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="150dp"
                     android:gravity="center"
                     android:layout_height="wrap_content" />
@@ -322,7 +319,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:min="1"
                     android:max="100"
                     android:layout_weight="4" />
 
@@ -484,7 +480,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:min="10"
                     android:max="120" />
             </LinearLayout>
 

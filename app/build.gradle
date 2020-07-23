@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.servoz.appsdisabler"
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 13
-        versionName "1.17"
+        versionName "1.18"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

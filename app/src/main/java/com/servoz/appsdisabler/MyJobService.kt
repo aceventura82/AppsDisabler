@@ -48,14 +48,10 @@ class MyJobService : JobService() {
         for(app in apps){
             if(context.packageManager.getApplicationInfo(app[0], 0).enabled){
                 objCmd.sudoForResult("pm disable ${app[0]}")
-                println("DISABLER_DEBUG::Disabling App")
                 disableCount++
-            }else{
-                println("DISABLER_DEBUG::App is Disabled")
             }
         }
         if(disableCount>0){
-            println("DISABLER_DEBUG::NOTIFY")
             Notifications().create(context,"Disabler",context.getString(R.string.apps_disabled, disableCount.toString()), "SILENT")
             context.getSharedPreferences("com.servoz.appsdisabler.prefs", 0).edit().putString("RECREATE", "YES").apply()
         }

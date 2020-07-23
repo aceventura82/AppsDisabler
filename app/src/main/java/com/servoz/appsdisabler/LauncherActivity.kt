@@ -65,6 +65,7 @@ class LauncherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.launcher_layout)
 
+
         prefs = getSharedPreferences(prefFile, 0)
         val objCmd= RunCommand()
         if(prefs!!.getString("LABELS","-1")=="-1")
@@ -78,11 +79,16 @@ class LauncherActivity : AppCompatActivity() {
         setTheme()
         setLauncherSize()
         setColors()
+        val valJob = prefs!!.getString("SCREEN_TIMEOUT","")!="" && prefs!!.getString("SCREEN_TIMEOUT","")!="Disabled"
         mainMyAppsLayout.setOnClickListener {
-            val startMain = Intent(Intent.ACTION_MAIN)
-            startMain.addCategory(Intent.CATEGORY_HOME)
-            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(startMain)
+            if(!valJob){
+                finish()
+            }else{
+                val startMain = Intent(Intent.ACTION_MAIN)
+                startMain.addCategory(Intent.CATEGORY_HOME)
+                startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(startMain)
+            }
         }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
         val tagsPagesNames=ArrayList<String>()
@@ -111,10 +117,12 @@ class LauncherActivity : AppCompatActivity() {
                 sleep(2000)
                 uiThread { showHelp() }
             }
-        val screenStateFilter = IntentFilter()
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
-        registerReceiver(mScreenStateReceiver, screenStateFilter)
+        if(valJob) {
+            val screenStateFilter = IntentFilter()
+            screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
+            screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
+            registerReceiver(mScreenStateReceiver, screenStateFilter)
+        }
         notificationChannels()
     }
 
@@ -127,7 +135,7 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(mScreenStateReceiver!=null)
+        if(prefs!!.getString("SCREEN_TIMEOUT","")!="" && prefs!!.getString("SCREEN_TIMEOUT","")!="Disabled")
             unregisterReceiver(mScreenStateReceiver)
     }
 

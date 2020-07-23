@@ -7,16 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.SeekBar
-import android.widget.Switch
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import com.servoz.appsdisabler.LauncherActivity
 import com.servoz.appsdisabler.R
-import com.tiper.MaterialSpinner
 import kotlinx.android.synthetic.main.fragment_config.*
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnChooseColorListener
@@ -97,8 +93,8 @@ class Config:Fragment() {
 
         columnsCount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textViewCols.text =progress.toString()
-                col=progress
+                col=1+progress
+                textViewCols.text =col.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -125,7 +121,7 @@ class Config:Fragment() {
 
         launcherHeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                value= progress
+                value= 1+progress
                 textViewHeight.text =value.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -136,7 +132,7 @@ class Config:Fragment() {
     }
 
     private fun iconsSize(){
-        var value=prefs!!.getInt("ICONS_SIZE",0)
+        var value=prefs!!.getInt("ICONS_SIZE",10)
         IconSize.progress= value
         if(value.toString() == "10")
             textViewIconSize.text =getString(R.string.auto)
@@ -145,11 +141,11 @@ class Config:Fragment() {
 
         IconSize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                value= progress
+                value= 10+progress
                 if(value.toString() == "10")
                     textViewIconSize.text =getString(R.string.auto)
                 else
-                    textViewIconSize.text =progress.toString()
+                    textViewIconSize.text =value.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -166,8 +162,8 @@ class Config:Fragment() {
 
         bgAlpha.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                textAlpha.text =progress.toString()
-                cAlpha=progress
+                cAlpha=1+progress
+                textAlpha.text =cAlpha.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -211,21 +207,20 @@ class Config:Fragment() {
 
     private fun spinner(){
         //Gender spinner
-        val titles= arrayListOf(getString(R.string.disabled), "0", "1" ,"5")
-        val values= arrayListOf("-1", "0", "1" ,"5")
+        val titles= arrayListOf(getString(R.string.disabled), "0", "1" ,"5", "10", "15")
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, titles)
         screen_timeout.adapter = arrayAdapter
-        screen_timeout.selection=when(prefs!!.getString("SCREEN_TIMEOUT","")) {
-            "-1" -> 0
+        screen_timeout.setSelection(when(prefs!!.getString("SCREEN_TIMEOUT","")) {
+            getString(R.string.disabled) -> 0
             "0" -> 1
             "1" -> 2
             else -> 3
-        }
-        screen_timeout.onItemSelectedListener = object : MaterialSpinner.OnItemSelectedListener {
-            override fun onItemSelected(parent: MaterialSpinner, view: View?, position: Int, id: Long) {
-                prefs!!.edit().putString("SCREEN_TIMEOUT", values[position]).apply()
+        })
+        screen_timeout.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                prefs!!.edit().putString("SCREEN_TIMEOUT", screen_timeout.selectedItem.toString()).apply()
             }
-            override fun onNothingSelected(parent: MaterialSpinner) {}
         }
     }
 
