@@ -84,10 +84,11 @@ class LauncherActivity : AppCompatActivity() {
             if(!valJob){
                 finish()
             }else{
-                val startMain = Intent(Intent.ACTION_MAIN)
+                /*val startMain = Intent(Intent.ACTION_MAIN)
                 startMain.addCategory(Intent.CATEGORY_HOME)
                 startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(startMain)
+                startActivity(startMain)*/
+                moveTaskToBack(false)
             }
         }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
@@ -127,10 +128,11 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val startMain = Intent(Intent.ACTION_MAIN)
+        /*val startMain = Intent(Intent.ACTION_MAIN)
         startMain.addCategory(Intent.CATEGORY_HOME)
         startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(startMain)
+        startActivity(startMain)*/
+        moveTaskToBack(false)
     }
 
     override fun onDestroy() {

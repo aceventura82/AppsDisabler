@@ -143,7 +143,8 @@ class LauncherSlideFragment : Fragment() {
     }
     
     private fun launchApp(objCmd:RunCommand, app: ArrayList<String>) {
-        objCmd.enableApp(requireContext(), app)
+        if(!requireActivity().packageManager.getApplicationInfo(app[0], 0).enabled)
+            objCmd.enableApp(requireContext(), app)
         try{
             val intent: Intent = requireActivity().packageManager.getLaunchIntentForPackage(app[0])!!
             startActivity(intent)
