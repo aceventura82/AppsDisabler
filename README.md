@@ -4,6 +4,37 @@ This application need ROOT to diable applications
 
 This is an Open Source version of IceBox App
 
+
+CHANGES Version 1.19:
+* Back to previous app instead of minimize, remove disable toast when enabled
+
+CHANGES Version 1.18:
+* Fix versionCode to 18
+
+CHANGES Version 1.17:
+* add backPressed minimize
+
+CHANGES Version 1.16:
+* Add widgets
+
+CHANGES Version 1.15:
+* Add screen Of disable notification, use JobService to auto disable
+
+CHANGES Version 1.14:
+* auto disable after screen is off, Icons size, Fix long name
+
+CHANGES Version 1.13:
+* Merge branch 'master'
+
+CHANGES Version 1.12:
+* Fix Text in app list
+
+CHANGES Version 1.11:
+*  Move to SDCard option
+
+CHANGES Version 1.10:
+*  Minnor changes
+
 CHANGES Version 1.9:
 * Option to hide from Recent Apps
 
@@ -20,7 +51,7 @@ CHANGES Version 1.6:
 * Added First Run Helps
 
 
-Current Version 1.13
+Last Version
 <a href="https://github.com/aceventura82/AppsDisabler/blob/master/app/release/app-release.apk" >Download </a>
 
 <a href="https://forum.xda-developers.com/android/apps-games/app-disabler-app-to-easily-disable-app-t4121581">XDA Forum</a>
