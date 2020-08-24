@@ -29,6 +29,7 @@ class LauncherSlideFragment : Fragment() {
     private var labels=""
     private var tags=ArrayList<String>()
     private var grayIcons=false
+    private var tagsOrder=ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState:
         Bundle?): View? {
@@ -40,6 +41,7 @@ class LauncherSlideFragment : Fragment() {
         labels = requireArguments().getString("labels")!!
         tags= requireArguments().getStringArrayList("tags") as ArrayList<String>
         grayIcons = requireArguments().getString("grayIcons")!! == "ON"
+        tagsOrder= requireArguments().getStringArrayList("tagsOrder") as ArrayList<String>
         getApps(view, requireArguments().getInt("cols"),tag)
         return view
     }
@@ -176,7 +178,7 @@ class LauncherSlideFragment : Fragment() {
             if(tags.count()==0)
                 break
             val tag=tags[i]
-            val tagId="|TAG_$i|"
+            val tagId="|TAG_${tagsOrder[i]}|"
             val mm = popup.menu.findItem(menus[i])
             if(tag!=""){
                 if(!app[3].isBlank() && app[3].contains(tagId)){
@@ -278,6 +280,7 @@ class LauncherSlideFragment : Fragment() {
             args.putString("labels", apps.labels)
             args.putStringArrayList("tags", apps.tags)
             args.putString("grayIcons", apps.grayIcons)
+            args.putStringArrayList("tagsOrder", apps.tagsOrder)
             val fragment = LauncherSlideFragment()
             fragment.arguments = args
             return fragment

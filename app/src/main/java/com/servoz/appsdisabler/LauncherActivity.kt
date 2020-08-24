@@ -19,6 +19,7 @@ import android.view.animation.TranslateAnimation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -93,14 +94,16 @@ class LauncherActivity : AppCompatActivity() {
         }
         buttonLauncherMenu.setOnClickListener{showConfigMenu( objCmd)}
         val tagsPagesNames=ArrayList<String>()
+        val tagsOrder=ArrayList<String>()
         for (i in prefs!!.getString("TAGS_ORDER","")!!.split("|")) {
             tagsPagesNames.add(prefs!!.getString("TAG_$i", "")!!)
+            tagsOrder.add(i)
         }
         tabsPages.add(TagView("", prefs!!.getInt("my_apps_columns",6), textColor, textColor2,"",
-            prefs!!.getString("LABELS","")!!, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!))
+            prefs!!.getString("LABELS","")!!, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!, tagsOrder))
         if(prefs!!.getString("SHOW_TABS","")=="ON"){
             newTab()
-            createTagsViews(tagsPagesNames)
+            createTagsViews(tagsPagesNames, tagsOrder)
         }else{
             linearLayoutTags.isVisible=false
             currentTag=""
@@ -204,7 +207,7 @@ class LauncherActivity : AppCompatActivity() {
         buttonLauncherEnableAll.setColorFilter(iconsColors)
     }
 
-    private fun createTagsViews(tagsPagesNames:ArrayList<String>){
+    private fun createTagsViews(tagsPagesNames:ArrayList<String>, tagsOrder:ArrayList<String>){
         val cols=prefs!!.getInt("my_apps_columns",6)
         val labels=prefs!!.getString("LABELS","")!!
         for (i in prefs!!.getString("TAGS_ORDER","")!!.split("|")){
@@ -213,7 +216,7 @@ class LauncherActivity : AppCompatActivity() {
                 tabsPages.add(
                     TagView(
                         "TAG_$i", cols, textColor, textColor2,
-                        prefs!!.getString("TAG_$i", "")!!, labels, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!
+                        prefs!!.getString("TAG_$i", "")!!, labels, tagsPagesNames, prefs!!.getString("GRAY_ICONS","")!!, tagsOrder
                     )
                 )
             }
@@ -376,13 +379,13 @@ class LauncherActivity : AppCompatActivity() {
             p1=configLayout.width.toFloat()
             p2=0f
             configLayout.isVisible=true
-            buttonLauncherMenu.setImageDrawable(getDrawable(R.drawable.ic_arrow_right))
+            buttonLauncherMenu.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_arrow_right))
         }
         else{
             p1=0f
             p2=configLayout.width.toFloat()
             configLayout.isVisible=false
-            buttonLauncherMenu.setImageDrawable(getDrawable(R.drawable.ic_arrow_left))
+            buttonLauncherMenu.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_arrow_left))
         }
         val animate = TranslateAnimation(p1, p2, 0f, 0f)
         animate.duration = 500
