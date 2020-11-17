@@ -9,6 +9,8 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -329,7 +331,6 @@ class LauncherActivity : AppCompatActivity() {
                 findViewById<TextView>(c).setTextColor(if (enable) textColor else textColor2)
             }catch (ex:NullPointerException){}
         }
-        recreate()
     }
 
     private fun showConfigMenu(objCmd: RunCommand) {
@@ -359,13 +360,16 @@ class LauncherActivity : AppCompatActivity() {
             animateMenu()
         }
         buttonLauncherEnableAll.setOnClickListener {
+            println("123")
             doAsync {
                 changeAll(objCmd, true)
+                println("after change all")
                 uiThread {
                     Toast.makeText(this@LauncherActivity, getString(R.string.AllAppsEnabled), Toast.LENGTH_SHORT).show()
                     finish()
                     val intent = Intent(this@LauncherActivity, LauncherActivity::class.java)
                     startActivity(intent)
+                    println("restart")
                 }
             }
         }

@@ -93,6 +93,7 @@ class LauncherSlideFragment : Fragment() {
             ll.orientation = LinearLayout.VERTICAL
 
             val img = ImageView(requireContext())
+            img.id = 10000+c
             img.setImageDrawable(requireActivity().packageManager.getApplicationIcon(app[0]))
             val iconSize=if(imgSize==10) cellSize-(cellSize.div(5)) else imgSize
             img.layoutParams=LinearLayout.LayoutParams(iconSize, iconSize).apply {
@@ -133,6 +134,7 @@ class LauncherSlideFragment : Fragment() {
                 ll.setOnClickListener {
                     launchApp(objCmd, app)
                     text.setTextColor(textColor)
+                    restoreColor(img)
                 }
                 //menu
                 ll.setOnLongClickListener {
@@ -268,6 +270,11 @@ class LauncherSlideFragment : Fragment() {
         val cf = ColorMatrixColorFilter(matrix)
         v.colorFilter = cf
         v.imageAlpha = 128 // 128 = 0.5
+    }
+
+    private fun restoreColor(v: ImageView){
+        v.colorFilter = null
+        v.imageAlpha = 255
     }
 
     companion object {
