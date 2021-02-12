@@ -41,18 +41,21 @@ class MyJobService : JobService() {
     private fun changeAll(context: Context){
         val objCmd= RunCommand()
         val dbHandler = Db(context, null)
-        val apps=dbHandler.getData("app", "`launcher` IS NULL")
+        val apps=dbHandler.getData("app", "`launcher` != '1'")
         apps.sortBy{it[1].toLowerCase(Locale.ROOT)}
         println("DISABLER_DEBUG::apps to auto disable ${apps.count()}")
         var disableCount=0
+        var disableInfo=""
         for(app in apps){
             if(context.packageManager.getApplicationInfo(app[0], 0).enabled){
+                println("DISABLER_DEBUG::pm disable ${app[0]}")
                 objCmd.sudoForResult("pm disable ${app[0]}")
                 disableCount++
+                disableInfo+=app[1]+", "
             }
         }
         if(disableCount>0){
-            Notifications().create(context,"Disabler",context.getString(R.string.apps_disabled, disableCount.toString()), "SILENT")
+            Notifications().create(context,"Disabler",context.getString(R.string.apps_disabled, disableCount.toString(), disableInfo.substring(0,disableInfo.length-2)), "SILENT")
             context.getSharedPreferences("com.servoz.appsdisabler.prefs", 0).edit().putString("RECREATE", "YES").apply()
         }
     }
