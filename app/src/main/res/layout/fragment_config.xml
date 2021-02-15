@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/system_apps_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchSysApps"
                     android:paddingStart="20dp"
                     android:layout_weight="1"
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/hide_recent_apps_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchRecentApps"
                     android:paddingStart="20dp"
                     android:layout_weight="1"
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tabs_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchTabs"
                     android:paddingStart="20dp"
                     android:layout_weight="1"
@@ -212,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/all_tabs_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchAllTabB"
                     android:paddingStart="20dp"
                     android:layout_weight="1"
@@ -350,7 +350,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/labels_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHideLabels"
                     android:paddingStart="20dp"
                     android:layout_weight="1"
@@ -423,7 +423,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/gray_icons_desc" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchGrayIcons"
                     android:paddingStart="20dp"
                     android:layout_weight="1"

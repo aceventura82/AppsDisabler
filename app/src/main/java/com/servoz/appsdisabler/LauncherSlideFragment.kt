@@ -183,14 +183,14 @@ class LauncherSlideFragment : Fragment() {
             val tagId="|TAG_${tagsOrder[i]}|"
             val mm = popup.menu.findItem(menus[i])
             if(tag!=""){
-                if(!app[3].isBlank() && app[3].contains(tagId)){
+                if(app[3].isNotBlank() && app[3].contains(tagId)){
                     mm.title="$tag ✔"
                 }else
                      mm.title = tag
                 mm.setOnMenuItemClickListener {
                     val tagsList:String
                     val msg:String
-                    if(!app[3].isBlank() && app[3].contains(tagId)){
+                    if(app[3].isNotBlank() && app[3].contains(tagId)){
                         tagsList=app[3].replace(tagId,"")
                         msg=getString(R.string.RemovedToTag, tag)
                     }else{

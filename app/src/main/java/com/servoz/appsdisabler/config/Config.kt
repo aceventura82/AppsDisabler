@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import com.servoz.appsdisabler.LauncherActivity
 import com.servoz.appsdisabler.R
@@ -103,7 +104,7 @@ class Config:Fragment() {
         })
     }
 
-    private fun changeSwitch(key:String, view:Switch){
+    private fun changeSwitch(key:String, view:SwitchCompat){
         view.isChecked=prefs!!.getString(key,"")!=""
 
         view.setOnClickListener{

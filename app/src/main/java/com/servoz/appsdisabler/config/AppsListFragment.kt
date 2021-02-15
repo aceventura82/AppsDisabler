@@ -60,12 +60,11 @@ class AppsListFragment: Fragment(),androidx.appcompat.widget.SearchView.OnQueryT
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        if(prefs!!.getString("HELP_APPS","")=="")
-        doAsync {
-            Thread.sleep(2000)
-            uiThread { showHelp() }
-        }
-
+        if(requireActivity().intent.getStringExtra("CONFIG")!="1" && prefs!!.getString("HELP_APPS","")=="")
+            doAsync {
+                Thread.sleep(2000)
+                uiThread { showHelp() }
+            }
     }
 
 

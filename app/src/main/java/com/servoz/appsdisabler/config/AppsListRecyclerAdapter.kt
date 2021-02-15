@@ -184,7 +184,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                     val tagId="|TAG_$i|"
                     val mm = popup.menu.findItem(menus[i])
                     if(tag!=""){
-                        if(app.count()==1 && !app[0][3].isBlank() && app[0][3].contains(tagId)){
+                        if(app.count()==1 && app[0][3].isNotBlank() && app[0][3].contains(tagId)){
                             mm.title = "$tag ✔"
                         }else
                             mm.title = tag
@@ -203,7 +203,7 @@ class AppsListRecyclerAdapter(private val dataList: MutableList<SearchApps>) : D
                                 appAux
                             }else
                                 app[0]
-                            if(!appEdit[3].isBlank() && appEdit[3].contains(tagId)){
+                            if(appEdit[3].isNotBlank() && appEdit[3].contains(tagId)){
                                 tags=appEdit[3].replace(tagId,"")
                                 msg=context.getString(R.string.RemovedToTag, tag)
                                 itemView.textItemTags.text=itemView.textItemTags.text.toString()

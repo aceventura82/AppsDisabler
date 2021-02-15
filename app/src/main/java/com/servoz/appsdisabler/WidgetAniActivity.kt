@@ -2,7 +2,6 @@ package com.servoz.appsdisabler
 
 import android.app.ActivityManager
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
@@ -43,7 +42,7 @@ class WidgetAniActivity : AppCompatActivity() {
         doAsync {
             val dbHandler = Db(this@WidgetAniActivity, null)
             val apps=dbHandler.getData("app", "`launcher` IS NULL")
-            var msg =""
+            val msg: String
             val appsDisable= arrayListOf<ArrayList<String>>()
             for(app in apps)
                 if(packageManager.getApplicationInfo(app[0], 0).enabled != enable)
