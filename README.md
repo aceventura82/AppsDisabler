@@ -4,6 +4,11 @@ This application need ROOT to diable applications
 
 This is an Open Source version of IceBox App
 
+CHANGES Version 1.21:
+* Fix bug not all apps autodisabling
+
+CHANGES Version 1.20:
+* Fix Grayscale Icons update
 
 CHANGES Version 1.19:
 * Back to previous app instead of minimize, remove disable toast when enabled
